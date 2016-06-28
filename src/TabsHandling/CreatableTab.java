@@ -23,7 +23,9 @@ public class CreatableTab extends Tab{
 	HBox hbox = new HBox(); /* Hier soll der Content des Tabs abgelegt werden.
 	                           HBox kann auch bei Bedarf geändert werden.      */ 
 	
-	
+	TextArea writeArea = null; 
+	TextArea testArea  = null; 
+	Label    consoleMsg  = new Label(""); 
 	
 	public CreatableTab(String name){
 		super.setText(name);
@@ -57,6 +59,16 @@ public class CreatableTab extends Tab{
 		hbox.getChildren().remove(obj); 
 	}
 	
+	public void addAllComponents(){
+		if(writeArea != null && !hbox.getChildren().contains(writeArea))
+		hbox.getChildren().add(writeArea);
+		if(testArea != null&& !hbox.getChildren().contains(testArea))
+		hbox.getChildren().add(testArea);
+		if(consoleMsg != null&& !hbox.getChildren().contains(consoleMsg))
+		hbox.getChildren().add(consoleMsg);
+		
+		super.setContent(hbox); 
+	}
 	
 	/*
 	 * Die aktuellen Komponenten des Tabs werden gespeichert 
@@ -75,6 +87,18 @@ public class CreatableTab extends Tab{
 	public void setTabName(String newName){ tabName = newName; }
     public void setHBox(HBox newHBox)     { hbox = newHBox;    }
     public void setComponents(ArrayList<Object> newComp){ components = newComp; }
+    public void setConsoleMsg(Label newLabel){
+    	    
+    	  
+    		removeObject(consoleMsg);
+    		consoleMsg = new Label(newLabel.getText()); 
+    		System.out.println("New Label");
+    		aktComponents();
+    		
+    	
+    }
+	public void setWriteArea(TextArea newArea){	writeArea = newArea;  }
+	public void setTestArea(TextArea newArea){ testArea = newArea; }
 	
     
     	
@@ -83,5 +107,8 @@ public class CreatableTab extends Tab{
 	public String getTabName(){ return tabName; }
 	public HBox   getHBox()   { return hbox;    }
 	public ArrayList<Object> getComponents()  { return components; }	
+	public TextArea getWriteArea(){ return writeArea; }
+	public TextArea getTestArea(){ return testArea; }
+	public Label getConsoleMsg(){ return consoleMsg; }
 
 }

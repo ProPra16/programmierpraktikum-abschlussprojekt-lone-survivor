@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -36,7 +37,9 @@ public class Screen extends Scene{
 	  
 	  HBox menuePane = new HBox(); // Fuer die Anzeige der Buttons
 	  
-	  MenuBar menuBar = new MenuBar(); 		
+	  MenuBar menuBar = new MenuBar();
+
+      CreatableTab currentTab; 
 	  
 	  
 	public Screen(double width, double height) {
@@ -174,24 +177,40 @@ public class Screen extends Scene{
 			CreatableTab currentTab = (CreatableTab) tabPane.getTabs().get(i); 
 			if(currentTab.isSelected()){
 				currentTab.aktComponents();
-				TextArea currentTextArea = (TextArea)currentTab.getComponents().get(0); 
-				output = currentTextArea.getText(); 
+				output = currentTab.getWriteArea().getText();			 
 			}
-		}      
+		}  
 		return output;    
 	}
 
 	private void addTabToScreen(){
 		TextArea text = new TextArea();
+		TextArea test = new TextArea(); 
+		Label    label = new Label("Hier koennte Ihre Werbung stehen "); 
+		
 		CreatableTab newTab = new CreatableTab(JOptionPane.showInputDialog("New File Name")); 
+		
 		text.setText(
 				"public class "+ newTab.getTabName()+""
 						+ "{\n"
 						+ "// auto- generated code \n\n"
 						+ "}");
-		newTab.addTextArea(text);
+		
+		test.setText(
+				"public class "+ newTab.getTabName()+"Test"
+						+ "{\n"
+						+ "// auto- generated code \n\n"
+						+ "}");
+		
+		
+		newTab.setWriteArea(text);
+		newTab.setTestArea(test);
+		newTab.setConsoleMsg(label);
+		newTab.addAllComponents(); 
 		tabPane.getTabs().add(newTab); 
 	}
+	
 
+	
 
 }
