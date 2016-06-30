@@ -48,7 +48,8 @@ String destination = "";
         try
         {
         	FileReader fr = new FileReader(destination);
-            BufferedReader br = new BufferedReader(fr);
+            @SuppressWarnings("resource")
+			BufferedReader br = new BufferedReader(fr);
             
         	while(!br.readLine().equals(null))
         	{
@@ -66,7 +67,7 @@ String destination = "";
 	{
 		String out="";
 		int index = 0;
-		for(String tmp : zeilenliste)
+		for(@SuppressWarnings("unused") String tmp : zeilenliste)
 		{
 			out = out + zeilenliste.get(index) + " \n " ;
 			index ++;
