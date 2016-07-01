@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+  <class>
+
+        <name>Bla</name>
+
+        <syntax>
+	import ...
+
+	public class ....
+	{
+
+	}
+	</syntax>
+
+ </class>
+<class>
+
+	<name>Class1</name>
+
+        <syntax>
+	import ...
+
+	public class main (String[] args)
+	{
+
+	}
+	</syntax>
+ </class>	
+
+<class>
+
+	<name>Class2</name>
+
+        <syntax>
+	import ...
+
+	public class Class2
+	{
+
+	}
+	</syntax>
+  
+        
+   </class>
+
+
+<testclass>
+
+	<name>Tester</name>
+
+        <syntax>
+	import ...
+
+	public class Tester
+	{
+
+	}
+	</syntax>
+  
+        
+   </testclass>
+
+
+ 
+
+        
+<discription>
+Ich habe einen richtig dicken Penis oh ja....
+</discription>   
+
+
+</task>
