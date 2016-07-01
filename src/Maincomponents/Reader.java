@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Reader {
 	
 String destination = "";
+boolean xml = false;
 	
 	public Reader(){}
 	
@@ -20,30 +21,41 @@ String destination = "";
 		destination = des;
 	}
 	
-	public boolean check() //Prüft ob es sich um eine gültige Datei handelt, gibt ansonsten false zurück
+	/*
+	 * Prüft ob es sich um eine gültige Datei handelt, gibt ansonsten false zurück
+	 * Ebenso prüft es ob es sich um ein gültiges Dokument, also XML oder txt handelt.
+	 */
+	public boolean check() 
 	{
 		if(destination != "")
 		{
-			File file = new File(destination);
+			if(destination.substring(destination.length()-4,destination.length()-1).equals("txt") )
+			{
+				if( destination.substring(destination.length()-4,destination.length()-1).equals("xml")) xml = true;
+				
+				File file = new File(destination);
 			
-			try
-			{
-				file.exists();
-				if(file.exists())return true;
-			}
-			catch(Exception e)
-			{
-				return false;
+				try
+				{
+					file.exists();
+					if(file.exists())return true;
+				}
+				catch(Exception e)
+				{
+					return false;
+				}
+				
 			}
 		}
 		
 		return false;
 	}
 	
-	public String read() //liest die Datei ein
+	
+	public String readTxt() //liest die Textdatei ein
 	{
 		if(check()==false) return "Falscher Pfad/Name";
-		
+		if(xml = true ) return "Es handelt sich um den falschen Typ, benutzen sie den XML- Reader";
 		ArrayList <String> zeilenliste = new ArrayList <>();
         try
         {
