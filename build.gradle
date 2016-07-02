@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
 	testCompile 'de.hhu.stups:virtual-kata-lib:1.0.1'
+	testCompile 'junit:junit:4.12'
 }
 
 jar {
