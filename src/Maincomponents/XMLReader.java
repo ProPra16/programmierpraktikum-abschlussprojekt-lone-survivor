@@ -115,26 +115,27 @@ public class XMLReader {
   		try
   		{
   		ArrayList <String[]> tmp = new  ArrayList <> ();
+  		NodeList nList = doc.getElementsByTagName("class");
+  		nNode = nList.item(0);
+  		eElement = (Element) nNode;	  	
   		
-  			NodeList nList = doc.getElementsByTagName("class");
-  			for (int temp = 0; temp < nList.getLength(); temp++) 
+  		for(int i = 0 ; i < eElement.getElementsByTagName("name").getLength() ; i++ )
+  		{
+  			if (nNode.getNodeType() == Node.ELEMENT_NODE) 
   			{
-  				nNode = nList.item(temp);
-  				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
-  				{
-  					String [] help = new String [2];
-  					 eElement = (Element) nNode;	
-  					help[0] = eElement.getElementsByTagName("name").item(0).getTextContent();
-  					help[1] = eElement.getElementsByTagName("syntax").item(0).getTextContent();
-  					tmp.add(help);
-  				}
+  				String [] help = new String [2];		
+  				help[0] = eElement.getElementsByTagName("name").item(i).getTextContent();
+  				help[1] = eElement.getElementsByTagName("syntax").item(i).getTextContent();
+  				tmp.add(help);
   			}
-  			return tmp;
+  		}
+  		return tmp;
   		}
   		catch(Exception e)
   		{
   			return null;
   		}
+  		
   	}
   		 
   		
@@ -145,29 +146,78 @@ public class XMLReader {
   	{
   		try
   		{
-  			ArrayList <String[]> tmp = new  ArrayList <> ();
+  		ArrayList <String[]> tmp = new  ArrayList <> ();
+  		NodeList nList = doc.getElementsByTagName("testclass");
+  		nNode = nList.item(0);
+  		eElement = (Element) nNode;	  	
   		
-			NodeList nList = doc.getElementsByTagName("testclass");
-			for (int temp = 0; temp < nList.getLength(); temp++) 
-			{
-				nNode = nList.item(temp);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
-				{
-					String [] help = new String [2];
-					 eElement = (Element) nNode;	
-					help[0] = eElement.getElementsByTagName("name").item(0).getTextContent();
-					help[1] = eElement.getElementsByTagName("syntax").item(0).getTextContent();
-					tmp.add(help);
-				}
-			}
-			return tmp;
+  		for(int i = 0 ; i < eElement.getElementsByTagName("name").getLength() ; i++ )
+  		{
+  			if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+  			{
+  				String [] help = new String [2];		
+  				help[0] = eElement.getElementsByTagName("name").item(i).getTextContent();
+  				help[1] = eElement.getElementsByTagName("syntax").item(i).getTextContent();
+  				tmp.add(help);
+  			}
   		}
-  		catch(Exception o)
+  		return tmp;
+  		}
+  		catch(Exception e)
   		{
   			return null;
   		}
 	}
   	
+  	/*
+  	 * Gibt ein boolean zurück ob für diese Aufgabe Babysteps vorgesehen sind
+  	 */
+  public boolean babysteps()
+  {
+	  try
+	  {
+		  if(eingelesen == true ) 
+		  {
+			  NodeList nList = doc.getElementsByTagName("babysteps");
+			  nNode = nList.item(0);
+		  		eElement = (Element) nNode;
+		  		if(eElement.getElementsByTagName("activate").item(0).getTextContent().equals("true"))return true;
+		  		else{return false;}
+		  }
+		  return false;	
+	  }
+	  catch(Exception o)
+	  {
+		  return false;	
+	  }
+  }
+  
+  /*
+   * Gibt den Wert zurück der die Babysteps in Millisekunden repräsentiert
+   * Prüft vorher ob Babysteps enabeld sind, gibt ansonsten 0 zurück
+   */
+  public double babystepsValue()
+  {
+	  try
+	  {
+		  if(eingelesen == true ) 
+		  {
+			  NodeList nList = doc.getElementsByTagName("babysteps");
+			  nNode = nList.item(0);
+		  		eElement = (Element) nNode;
+		  		if(babysteps() == true)
+		  		{
+		  			return Double.parseDouble(eElement.getElementsByTagName("time").item(0).getTextContent())*1000;
+		  		}
+		  		else{return 0;}
+		  }
+		  return 0;	
+	  }
+	  catch(Exception o)
+	  {
+		  return 0;	
+	  }
+  }
 
   //gibt die Aufgabenstellung als String zurück
   public String aufgabenstellung ()

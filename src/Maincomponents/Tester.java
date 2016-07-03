@@ -34,15 +34,16 @@ public class Tester {
 		      }
 		    }
 	*/	  
-		String tmp= "D:/programmierpraktikum-abschlussprojekt-lone-survivor/Svenja.xml";
+		//String tmp= "D:/programmierpraktikum-abschlussprojekt-lone-survivor/Svenja.xml";
+		String tmp= "D:/programmierpraktikum-abschlussprojekt-lone-survivor/src/NewFile.xml";
 		XMLReader r = new XMLReader (tmp);
-		if(r.check()==true) System.out.println("true");
-		if(r.check()==false) System.out.println("false");
-		System.out.println(r.aufgabenstellung());
+	//	if(r.check()==true) System.out.println("true");
+	//	if(r.check()==false) System.out.println("false");
+	//	System.out.println(r.aufgabenstellung());
 		ArrayList<String []> l = new ArrayList <>();
 		l = r.hauptklassen();
 		
-		//System.out.println(l.size());
+		System.out.println(l.size());
 		for(String [] o : l)
 		{
 			System.out.println(o[0]);
@@ -57,6 +58,15 @@ public class Tester {
 			System.out.println(o[0]);
 			System.out.println(o[1]);
 		}
-		
+	/**
+	 * 	
+	 
+		if(r.babysteps()==true)
+		{
+			System.out.println("Babysteps enabled!");
+			System.out.println(r.babystepsValue());
+		}
+		else System.out.println("Babysteps disnabled!");
+	**/	
 	}
 }
