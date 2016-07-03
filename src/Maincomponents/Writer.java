@@ -9,36 +9,53 @@ public class Writer{
 	String input;
 	String fileName;
 	
-	public Writer(){
-	}
+	public Writer(){}
 	
-	public Writer(String input, String fileName){
+	public Writer(String input, String fileName)
+	{
 		setInput(input);
 		setFileName(fileName);
 	}
 	
-	public void setInput(String input){
+	public void setInput(String input)
+	{
 		this.input=input;
 	}
-	public void setFileName(String fileName){
+	public void setFileName(String fileName)
+	{
 		this.fileName=fileName;
 	}
 	
 	
-	public void write(String input, String fileName){
+	public void writeTxt(String input, String fileName)
+	{
 		try{
 		
+			fileName = fileName+".txt";
 			FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "utf-8");
 			BufferedWriter writer = new BufferedWriter(outputStreamWriter);
 			writer.write(input);
 			writer.flush();
 			writer.close();
-			
 		}
+		catch (IOException e){}
+	}
+	
+	public void writeJava(String input, String fileName)
+	{
+		try{
 		
-		catch (IOException e){
-			
+			fileName = fileName+".java";
+			FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "utf-8");
+			BufferedWriter writer = new BufferedWriter(outputStreamWriter);
+			writer.write(input);
+			writer.flush();
+			writer.close();
 		}
+		catch (IOException e){}
 	}
 }
+	
+	

@@ -114,7 +114,7 @@ public class XMLReader {
   	{
   		try
   		{
-  		ArrayList <String[]> tmp = new  ArrayList <> ();
+  		ArrayList <String[]>  tmp = new  ArrayList <> ();
   		NodeList nList = doc.getElementsByTagName("class");
   		nNode = nList.item(0);
   		eElement = (Element) nNode;	  	
@@ -181,6 +181,7 @@ public class XMLReader {
 			  NodeList nList = doc.getElementsByTagName("babysteps");
 			  nNode = nList.item(0);
 		  		eElement = (Element) nNode;
+		  		System.out.println("bla");
 		  		if(eElement.getElementsByTagName("activate").item(0).getTextContent().equals("true"))return true;
 		  		else{return false;}
 		  }
