@@ -28,7 +28,7 @@ public class Reader {
 	 */
 	public boolean check() {
 		if (destination != "") {
-			if (destination.endsWith(".txt")) {
+			if (destination.endsWith(".txt")||destination.endsWith(".java")||destination.endsWith(".xml")) {
 				if (destination.endsWith(".xml")){
 					System.out.println(destination);
 					xml = true;}
@@ -51,6 +51,32 @@ public class Reader {
 	}
 
 	public String readTxt() // liest die Textdatei ein
+	{
+		System.out.println(destination);
+		if (check() == false)
+			return "Falscher Pfad/Name";
+		if (xml == true)
+			return "Es handelt sich um den falschen Typ, benutzen sie den XML- Reader";
+		ArrayList<String> zeilenliste = new ArrayList<>();
+		try {
+			FileReader fr = new FileReader(destination);
+			@SuppressWarnings("resource")
+			BufferedReader br = new BufferedReader(fr);
+			String zeile = "";
+
+			do {
+				zeile = br.readLine();
+				if(!zeile.equals(null))zeilenliste.add(zeile);
+				
+
+			} while (zeile != null);
+		} catch (Exception e) {
+		}
+
+		return refactor(zeilenliste);
+	}
+	
+	public String readJava() // liest die Textdatei ein
 	{
 		System.out.println(destination);
 		if (check() == false)
