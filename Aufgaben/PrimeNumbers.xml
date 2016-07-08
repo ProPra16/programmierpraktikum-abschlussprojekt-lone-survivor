@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+
+	<class>
+		
+		<name>PrimeNumbers</name>
+		<syntax>
+			public class PrimeNumbers {
+				
+			}
+		</syntax>
+		
+	</class>
+	
+	<testclass>
+	
+		<name>PrimeNumbersTest</name>
+		<syntax>
+			public class PrimeNumbersTest {
+				
+			}
+		</syntax>
+	
+	</testclass>
+	
+	<description>
+		Schreiben Sie eine Methode primesUntil(int n), die alle Primzahlen kleiner n ausgibt.
+	</description>
+
+</task>
