@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -30,6 +31,8 @@ public class MainApp extends Application {
    @Override
    public void start(Stage mainStage) {
       mainStage.setTitle("AADMS"); // Andreas, Andreas, Denis, Marc, Sebastian (Alphabetisch)      
+      mainStage.getIcons().add(new Image("icon.jpg"));
+      
       mainStage.setScene(new Screen(640,400));
       mainStage.show();
    }

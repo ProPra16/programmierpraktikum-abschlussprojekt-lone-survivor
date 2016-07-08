@@ -1,6 +1,9 @@
 package Maincomponents;
-
-class Babysteps {
+ /* 
+ * @author Andreas Lüpertz
+ * @version 1.1
+ */
+public class Babysteps {
 	
 	private boolean expired;
 	private boolean running;

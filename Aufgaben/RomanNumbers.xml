@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+
+	<class>
+		
+		<name>RomanNumbers</name>
+		<syntax>
+			public class RomanNumbers {
+			
+			}
+		</syntax>
+		
+	</class>
+	
+	<testclass>
+	
+		<name>RomanNumbersTest</name>
+		<syntax>
+			public class RomanNumbersTest {
+			
+			}
+		</syntax>
+	
+	</testclass>
+	
+	<description>
+		Schreiben Sie eine Methode toRoman(int n), die eine Zahl n in römischer Schreibweise
+		auf der Konsole ausgibt.
+	</description>
+
+</task>
