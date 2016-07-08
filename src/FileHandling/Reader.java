@@ -1,10 +1,10 @@
-package Maincomponents;
+package FileHandling;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class Reader {
+public class Reader extends FolderManager {
 	
 String destination = "";
 	
@@ -20,7 +20,7 @@ String destination = "";
 		destination = des;
 	}
 	
-	public boolean check() //Prüft ob es sich um eine gültige Datei handelt, gibt ansonsten false zurück
+	public boolean check() //Pr?ft ob es sich um eine g?ltige Datei handelt, gibt ansonsten false zur?ck
 	{
 		if(destination != "")
 		{
@@ -42,7 +42,7 @@ String destination = "";
 	
 	public String read() //liest die Datei ein
 	{
-		if(check()==false) return "Falscher Pfad/Name";
+		//if(check()==false) return "Falscher Pfad/Name";
 		
 		ArrayList <String> zeilenliste = new ArrayList <>();
         try
@@ -50,12 +50,16 @@ String destination = "";
         	FileReader fr = new FileReader(destination);
             BufferedReader br = new BufferedReader(fr);
             
-        	while(!br.readLine().equals(null))
+            
+            String zeile = br.readLine(); 
+        	
+        	while(zeile != null)
         	{
         	
-        		zeilenliste.add(br.readLine());
-        
+        		zeilenliste.add(zeile);
+                zeile = br.readLine(); 
         	}
+        	br.close(); 
         }
         catch(Exception e){}
  
