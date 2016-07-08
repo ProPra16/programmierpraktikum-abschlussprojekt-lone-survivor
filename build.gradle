@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group 'de.hhu.propra16.abschlussprojekt'
+version '1.01-TEST'
+
+repositories {
+	mavenCentral();
+}
+
+dependencies {
+	testCompile 'de.hhu.stups:virtual-kata-lib:1.0.1'
+	testCompile 'junit:junit:4.12'
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'GUI.Handling.MainApp'
+	}
+}

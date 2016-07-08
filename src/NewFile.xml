@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+
+	<class>
+		<name>FooBar</name>
+		<syntax>
+
+				import java.util.*;
+				
+				public class FooBar
+				{
+					....
+				}
+		</syntax>
+
+		<name>FizzBuzz</name>
+		<syntax>
+
+				import java.util.*;
+				
+				public class FizzBuzz
+				{
+					....
+				}
+		</syntax>
+	</class>
+
+	<testclass>
+		<name>FooBarTest</name>
+		<syntax>
+
+				import java.util.*;
+				
+				public class FooBarTest
+				{
+					....
+				}
+		</syntax>
+
+		<name>FizzBuzzTest</name>
+		<syntax>
+
+				import java.util.*;
+				
+				public class FizzBuzzTest
+				{
+					....
+				}
+		</syntax>
+	</testclass>
+
+	<discription>
+	ueben bis zum....
+	</discription>   
+		
+	<babysteps>
+
+	<activate>true</activate>
+	<time>120</time>
+	</babysteps>
+
+</task>

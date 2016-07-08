@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Reader extends FolderManager {
 	
 String destination = "";
+boolean xml = false;
 	
 	public Reader(){}
 	
@@ -20,35 +21,56 @@ String destination = "";
 		destination = des;
 	}
 	
+<<<<<<< HEAD:src/FileHandling/Reader.java
 	public boolean check() //Pr?ft ob es sich um eine g?ltige Datei handelt, gibt ansonsten false zur?ck
+=======
+	/*
+	 * Prüft ob es sich um eine gültige Datei handelt, gibt ansonsten false zurück
+	 * Ebenso prüft es ob es sich um ein gültiges Dokument, also XML oder txt handelt.
+	 */
+	public boolean check() 
+>>>>>>> refs/remotes/origin/master:src/Maincomponents/Reader.java
 	{
 		if(destination != "")
 		{
-			File file = new File(destination);
+			if(destination.substring(destination.length()-4,destination.length()-1).equals("txt") )
+			{
+				if( destination.substring(destination.length()-4,destination.length()-1).equals("xml")) xml = true;
+				
+				File file = new File(destination);
 			
-			try
-			{
-				file.exists();
-				if(file.exists())return true;
-			}
-			catch(Exception e)
-			{
-				return false;
+				try
+				{
+					file.exists();
+					if(file.exists())return true;
+				}
+				catch(Exception e)
+				{
+					return false;
+				}
+				
 			}
 		}
 		
 		return false;
 	}
 	
-	public String read() //liest die Datei ein
+	
+	public String readTxt() //liest die Textdatei ein
 	{
+<<<<<<< HEAD:src/FileHandling/Reader.java
 		//if(check()==false) return "Falscher Pfad/Name";
 		
+=======
+		if(check()==false) return "Falscher Pfad/Name";
+		if(xml = true ) return "Es handelt sich um den falschen Typ, benutzen sie den XML- Reader";
+>>>>>>> refs/remotes/origin/master:src/Maincomponents/Reader.java
 		ArrayList <String> zeilenliste = new ArrayList <>();
         try
         {
         	FileReader fr = new FileReader(destination);
-            BufferedReader br = new BufferedReader(fr);
+            @SuppressWarnings("resource")
+			BufferedReader br = new BufferedReader(fr);
             
             
             String zeile = br.readLine(); 
@@ -70,7 +92,7 @@ String destination = "";
 	{
 		String out="";
 		int index = 0;
-		for(String tmp : zeilenliste)
+		for(@SuppressWarnings("unused") String tmp : zeilenliste)
 		{
 			out = out + zeilenliste.get(index) + " \n " ;
 			index ++;
