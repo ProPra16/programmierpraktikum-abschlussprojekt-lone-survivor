@@ -16,6 +16,9 @@
 	
 		<name>LeapYearTest</name>
 		<syntax>
+			import static org.junit.Assert;
+			import org.junit.*;
+			
 			public class LeapYearTest {
 			
 			}
