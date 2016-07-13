@@ -35,7 +35,7 @@ import javafx.stage.StageStyle;
  * modifiziert und geändert
  * 
  * @author Sebastian Stock
- * @version 1.0
+ * @version 1.1
  *
  */
 public class ImportManager {
