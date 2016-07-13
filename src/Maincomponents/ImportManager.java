@@ -13,6 +13,18 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ObservableNumberValue;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 /**
  * Dowonloadcode von:
  * http://stackoverflow.com/questions/8253852/how-to-download-a-zip-file-from-a-
@@ -29,16 +41,77 @@ import java.util.zip.ZipInputStream;
 public class ImportManager {
 
 	List<String> fileList;
+	final SimpleDoubleProperty files = new SimpleDoubleProperty(0);
+	double filestotal = 5000;
+	double filesAnzahl = 0;
 
-	public ImportManager() {
+	public ImportManager() {} //Standardkonstruktor
+	
+	/*
+	 * Konstruktor für einen Donwnload mit Ladeschirmanzeige. Übergabe der Stage mit new ImportManager(..., new Stage());
+	 */
+	public ImportManager(String destination, String finalDestination, String outputName, Stage stage)
+	{
+		stage.initStyle(StageStyle.UNDECORATED);
+		BorderPane borderPane = new BorderPane();
+		borderPane.setMaxSize(200, 50);
+		borderPane.setMinSize(200, 50);
+		ProgressBar pb = new ProgressBar();
+
+		pb.setProgress(-1);
+		pb.setMinSize(200, 50);
+
+		pb.setMinSize(200, 50);
+		pb.progressProperty().bind(files);
+
+		HBox hb = new HBox();
+
+		hb.getChildren().addAll(pb);
+
+		borderPane.getChildren().addAll(hb);
+		stage.setScene(new Scene(borderPane, 200, 50));
+		stage.show();
+		
+		Service service = new Service() {
+            @Override
+            public Task createTask() {
+                return new Task() {
+                    @Override
+                    public Object call() throws Exception {               
+                    	downloadZIP(destination, finalDestination);
+                    	while(files.get()<0.5)
+                    	{
+                    		Thread.sleep(100);
+                    		files.set(files.get()+0.01);
+                    	}
+                		unzip(finalDestination, outputName);
+                		while(files.get()<1)
+                    	{
+                    		Thread.sleep(100);
+                    		files.set(files.get()+0.05);
+                    	}
+                		remove(finalDestination);
+ 
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        
+                       Platform.exit();
+                        return null;
+                    }
+                };
+            }
+        };
+        pb.progressProperty().bind(files);
+        service.start();
 	}
 
 	/*
 	 * Führt einen vollständigen Donwload und Entpackvorgang an der vorgegeben
 	 * Stelle aus
-	 */
-
-	/*
+	 *
 	 * destination = url ,finalDestination = Zieladresse+Name
 	 * output Name = neuer Name des Zips
 	 */
@@ -59,7 +132,7 @@ public class ImportManager {
 
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
-
+			
 			InputStream in = connection.getInputStream();
 
 			if (!finalDestination.endsWith("/"))
@@ -80,9 +153,16 @@ public class ImportManager {
 		System.out.println("writing");
 		byte[] buf = new byte[bufferSize];
 		int n = input.read(buf);
+		//files.setValue(-1);
+		
+		
 		while (n >= 0) {
 			output.write(buf, 0, n);
-			System.out.println("progress" + n);
+			
+			System.out.println("progress " + files.get());
+			filesAnzahl ++;
+			files.set(((filesAnzahl*100)/filestotal)/100);
+			
 			n = input.read(buf);
 		}
 		output.flush();
@@ -126,6 +206,10 @@ public class ImportManager {
 					ZipEntry ze = zis.getNextEntry();
 					if (check(new File(destination)) == true) 
 					{
+						filestotal = filesAnzahl*2;
+						files.set(((filesAnzahl*100))/100);
+						System.out.println(files.get());
+						System.out.println("filestotalwefsdferwf:" +filesAnzahl);
 						while (ze != null) {
 
 						String fileName = ze.getName();
@@ -148,11 +232,15 @@ public class ImportManager {
 							fos.close();
 
 							ze = zis.getNextEntry();
+							filesAnzahl++;
+							files.set(((filesAnzahl*100)/filestotal)/100);
+							
 						}
 							zis.closeEntry();
 							zis.close();
 
 							System.out.println("Done");
+							
 							
 						}
 					
@@ -176,6 +264,7 @@ public class ImportManager {
 			if (check(new File(destination)) == true) {
 				File file = new File(destination);
 				file.delete();
+				files.set(filestotal/filestotal);
 			}
 			else{System.out.println("Falscher Pfad/Name");}
 		} catch (Exception e) {
