@@ -1,32 +1,10 @@
-
- 
-  
- 	public class HalloSevenja 
- 	{ 
-  
- 		public static void main(String[]args) 
- 		{ 
- 		 
- 		} 
- 	} 
- 	 
-
-public class HalloSevenja{                                                                                       
-                                                                                                                                                                                            
-                                                                                 public static void main(String[]args){                                                                                                                       
-                                                                                                                       		                                                                                                                       
-                                                                                 }                                                                                            
-                                                                                                                                                                                       
-                                                                              }                                                                                                                       
-                                                                                                                       	                                                                                                                       
-                                                                                                                                                                                                                                             
-                                                                                                                                                                                                                                           
-                                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                       
-                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                   
-                                                                                                                                                                                                                                 
-                                                                                                                                                                                                                               
+                                                                                                               
+                                                                                                               			public class LeapYear {                                                                                                           
+                                                                                                                                                                kmkmlmlml    JJ   dd                                           
+                                                                                                                                int five(){ return 5; }                                                                                                             
+                                                                                                               	        public int six(){ return 5;}                                                                                    
+                                                                                                               			}                                                                                                               
+                                                                                                               		                                                                                                               
                                                                                                                                                                                                                              
                                                                                                                                                                                                                            
                                                                                                                                                                                                                          
@@ -137,5 +115,4 @@ public class HalloSevenja{
        
      
    
-
  

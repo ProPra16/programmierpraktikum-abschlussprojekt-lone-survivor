@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+  <class>
+    <name>RomanNumbers</name>
+    <syntax>
+    public class RomanNumbers{}</syntax>
+  </class>
+  <testclass>
+    <name>TestRom</name>
+    <syntax>
+      import org.junit.Test;
+      import static org.junit.Assert.*;
+    public class TestRom{}
+    </syntax>
+  </testclass>
+	<discription>
+		Schreiben Sie eine Methode toRoman(int n), die eine Zahl n in römischer Schreibweise
+		auf der Konsole ausgibt.
+	</discription>
+
+</task>

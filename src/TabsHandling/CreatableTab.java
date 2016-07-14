@@ -14,10 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /***************************************************************************************
- *                                                                                     *
  * @author Marc Feger                                                                  *
- * @version 26.06.2016                                                                 *
- * @ToDo                                                                               *
  ***************************************************************************************/
 public class CreatableTab extends Tab{
 	

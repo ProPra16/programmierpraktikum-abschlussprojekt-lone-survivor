@@ -199,6 +199,7 @@ public class InternalCompiler implements JavaStringCompiler {
 	}
 
 	private void saveAllCompilationUnits(Path tempDirectory) {
+<<<<<<< HEAD
 		for (CompilationUnit unit : compilationUnits.values()) {
 			saveCompilationUnitToFolder(tempDirectory, unit);
 		}
@@ -211,6 +212,22 @@ public class InternalCompiler implements JavaStringCompiler {
 			Files.write(path, cu.getClassContent().getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
+=======
+
+		for (CompilationUnit unit : compilationUnits.values()) {
+			saveCompilationUnitToFolder(tempDirectory, unit);
+		}
+	}
+
+	private void saveCompilationUnitToFolder(Path folder, CompilationUnit cu) {
+		Path path = folder.resolve(cu.getSourceFile());
+		forwardResolver.put(cu, path.toFile());
+		try {
+			Files.write(path, cu.getClassContent().getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+
+>>>>>>> refs/remotes/origin/DenisStuff
 		}
 
 	}

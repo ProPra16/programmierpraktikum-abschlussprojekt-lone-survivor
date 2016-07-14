@@ -56,7 +56,11 @@ public class PopUpDialog {
 		view.setFitHeight(100);
 		alert.setGraphic(view);
 		alert.getButtonTypes().setAll(continueBtn, resetBtn);
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> refs/remotes/origin/DenisStuff
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == continueBtn){
 		    System.out.println("CHOOSEN: Continue");
