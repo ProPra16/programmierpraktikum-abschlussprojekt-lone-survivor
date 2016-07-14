@@ -5,6 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+ /* 
+ * @author Andreas Lüpertz
+ * @version 1.1 
+ * Unterteilung der write Methode in .txt und .java durch Sebastian Stock
+ */
+
 public class Writer{
 	String input;
 	String fileName;
