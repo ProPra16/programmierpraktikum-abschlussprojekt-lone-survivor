@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+	<class>
+		<name>Soldat</name>
+		<syntax>
+		public class Soldat{
+		}
+        </syntax>
+	</class>
+		<class>
+		<name>Waffe</name>
+		<syntax>
+		public class Waffe{
+		}
+        </syntax>
+	</class>
+		<class>
+		<name>Feind</name>
+		<syntax>
+		public class Feind{
+		}
+        </syntax>
+	</class>
+	<testclass>
+    <name>Testsomuch</name>
+      <syntax>
+      import org.junit.Test;
+      import static org.junit.Assert.*;
+      public class Testsomuch{}
+      </syntax>
+    </testclass>
+	
+	<discription>
+		Schreiben sie 3 Klassen Soldat,Waffe und Feind:
+		-Soldat soll mit waffeziehen() ein Objekt Waffe  zugeteilt werden,
+		-Außerdem gibt es eine Methode feidangreifen() womit der Soldat der Klasse Feind Leben abzieht.
+		-Feind muss mindesten 100 Leben haben, diese sollen mit get-,Set-Methoden ausgestatte sein.
+		-Waffe kann einem Soldaten zugeteilt werden und nur die Waffe weiß wie viel Schaden  sie macht
+		(die umsetzt des Schadens ist frei zu gestallten, aber wenn jeder Schuss gleich viel Schaden macht wo bleibt dann der spaß ? ).
+	</discription>
+
+</task>

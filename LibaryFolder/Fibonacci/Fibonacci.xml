@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+  <class>
+     <name>Fibonacci</name>
+     <syntax>
+     public class Fibonacci {}
+     </syntax>
+  </class>
+<testclass>
+<name>TestFibo</name>
+   <syntax>
+   import org.junit.Test;
+   import static org.junit.Assert.*;
+   public class TestFibo {
+     @Test
+     public void fibo1(){  
+     Fibonacci f = new Fibonacci();
+     assertEquals(1,f.fibo(1));  
+     }
+   }
+   </syntax>
+</testclass>	
+	<discription>
+		Schreiben Sie eine Methode fibo(int n), die die ersten n Fibonacci-Zahlen bestimmt.
+		Die Fibonacci-Zaheln sind folgendermaßen definiert:
+		- f1 = 1
+		- f2 = 1
+		- fn = (fn-1) + (fn-2)
+	</discription>
+
+</task>

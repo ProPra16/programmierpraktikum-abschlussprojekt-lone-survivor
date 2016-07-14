@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+	<class>
+		<name>LeapYear</name>
+		<syntax>
+		public class LeapYear{
+		}
+        </syntax>
+	</class>
+	<testclass>
+    <name>TestYear</name>
+      <syntax>
+      import org.junit.Test;
+      import static org.junit.Assert.*;
+	  public class TestYear{
+	  @Test
+	  public void test2000(){
+	  LeapYear Year=new LeapYear();
+	  assertTrue(Year.isLeapYear());
+	  }
+	  }
+      </syntax>
+    </testclass>
+	
+	<discription>
+		Schreiben Sie eine Methode isLeapYear(int n), die einen boolean-Wert zurückgibt, der
+		anzeigt, ob das übergebene Jahr n ein Schaltjahr ist oder nicht.
+		Ein Jahr ist ein Schaltjahr, wenn
+		- es durch 4, aber nicht durch 100 teilbar ist
+		- es durch 400 teilbar ist
+	</discription>
+
+</task>

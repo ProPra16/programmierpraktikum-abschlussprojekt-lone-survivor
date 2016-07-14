@@ -7,13 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /***************************************************************************************
- *                                                                                     *
  * @author Marc Feger                                                                  *
- * @version 26.06.2016                                                                 *
- * @ToDo                                                                               *
  ***************************************************************************************/
 public class CreatableTab extends Tab{
 	
@@ -23,8 +24,14 @@ public class CreatableTab extends Tab{
 	HBox hbox = new HBox(); /* Hier soll der Content des Tabs abgelegt werden.
 	                           HBox kann auch bei Bedarf geändert werden.      */ 
 	
+	VBox Vbox = new VBox();
+	StackPane stackPane = new StackPane();
+	
 	TextArea writeArea = null; 
 	TextArea testArea  = null; 
+	TextArea taskArea  = null; 
+	TreeView contents   = null; 
+	
 	Label    consoleMsg  = new Label(""); 
 	
 	public CreatableTab(String name){
@@ -61,15 +68,21 @@ public class CreatableTab extends Tab{
 	
 	public void addAllComponents(){
 		if(writeArea != null && !hbox.getChildren().contains(writeArea))
-		hbox.getChildren().add(writeArea);
+			hbox.getChildren().add(writeArea);
 		if(testArea != null&& !hbox.getChildren().contains(testArea))
-		hbox.getChildren().add(testArea);
+			hbox.getChildren().add(testArea);
+		if(taskArea != null&& !hbox.getChildren().contains(taskArea))
+			hbox.getChildren().add(taskArea);
 		if(consoleMsg != null&& !hbox.getChildren().contains(consoleMsg))
-		hbox.getChildren().add(consoleMsg);
-		
+			hbox.getChildren().add(consoleMsg);
+		if(contents != null){		
+			Vbox.getChildren().addAll(contents); 
+			hbox.getChildren().addAll(Vbox); 
+		}
+
 		super.setContent(hbox); 
 	}
-	
+
 	/*
 	 * Die aktuellen Komponenten des Tabs werden gespeichert 
 	 */
@@ -97,8 +110,10 @@ public class CreatableTab extends Tab{
     		
     	
     }
+    public void setContentTree(TreeView newView){ contents = newView;}
 	public void setWriteArea(TextArea newArea){	writeArea = newArea;  }
 	public void setTestArea(TextArea newArea){ testArea = newArea; }
+	public void setTaskArea(TextArea newArea){ taskArea = newArea; }
 	
     
     	
@@ -109,6 +124,8 @@ public class CreatableTab extends Tab{
 	public ArrayList<Object> getComponents()  { return components; }	
 	public TextArea getWriteArea(){ return writeArea; }
 	public TextArea getTestArea(){ return testArea; }
+	public TextArea getTaskArea(){return taskArea; }
 	public Label getConsoleMsg(){ return consoleMsg; }
+	public TreeView getTreeView(){ return contents; }
 
 }

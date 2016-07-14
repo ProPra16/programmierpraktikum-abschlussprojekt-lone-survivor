@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+    
+    
+    
+    
+ <class>
+
+        <name>Peter</name>
+
+        <syntax>public class Peter
+{
+
+		public static void main(String[]args)
+		{
+	     System.out.println("Hallo Welt"); 
+	     System.exit(0); 
+		}
+	}</syntax>
+
+ </class>
+ 
+     <class>
+
+        <name>Swegat</name>
+
+        <syntax>public class Swegat
+{
+
+		public static void main(String[]args)
+{
+	     System.out.println("Hallo Welt"); 
+	     System.exit(0); 
+		}
+	}</syntax>
+
+ </class>
+ 
+    
+  <class>
+
+        <name>HalloSevenja</name>
+
+        <syntax>public class HalloSevenja
+{
+
+		public static void main(String[]args)
+		{
+		
+		}
+	}</syntax>
+
+ </class>
+
+ 
+
+<testclass>
+
+	<name>Tester</name>
+
+        <syntax>public class Tester
+{
+		
+	}</syntax>
+  
+        
+   </testclass>
+
+<testclass>
+
+	<name>TesterPester</name>
+
+        <syntax>public class TesterPester
+{
+	
+	}</syntax>
+  
+        
+   </testclass>
+
+
+ 
+ 
+
+        
+<discription>
+Preiset die Svenja...
+</discription>   
+
+
+</task>
