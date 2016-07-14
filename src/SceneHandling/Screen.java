@@ -1,13 +1,5 @@
 package SceneHandling;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-=======
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,19 +10,14 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
->>>>>>> refs/remotes/origin/DenisStuff
 
 import CompilerHandling.Tester;
-<<<<<<< HEAD
-import FileHandling.FolderManager;
-=======
 import FileHandling.FileExport;
 import FileHandling.FolderManager;
 import FileHandling.ImportManager;
 import FileHandling.Reader;
 import FileHandling.Writer;
 import StringHandling.StringFilter;
->>>>>>> refs/remotes/origin/DenisStuff
 import TabsHandling.CreatableTab;
 import TabsHandling.Task;
 import javafx.beans.value.ChangeListener;
@@ -64,21 +51,6 @@ public class Screen extends Scene{
 
 	static Group root = new Group();
 
-<<<<<<< HEAD
-      CreatableTab currentTab; 
-    
-      HashMap<String, CreatableTab> tabs = new HashMap<>();
-      
-      FolderManager folderManager = new FolderManager(); 
-    
-      List<String> dialogData = folderManager.getFolderNames(); 
-      
-      Label label = new Label("Konsole"); 
-      TextArea console = new TextArea(); 
-       
-	  
-	  
-=======
 	BorderPane borderPane = new BorderPane(); // Hier wird alles drauf abgebildet
 
 	TabPane tabPane = new TabPane(); // Fuer die Anzeige der Tabs
@@ -103,7 +75,6 @@ public class Screen extends Scene{
 	TextArea testArea = new TextArea(); 
 
 
->>>>>>> refs/remotes/origin/DenisStuff
 	public Screen(double width, double height) {
 		super(root, width, height);
 
@@ -124,10 +95,7 @@ public class Screen extends Scene{
 		initBorderPane(); 
 		initMenuBar(); 
 		initTabPane();
-<<<<<<< HEAD
-=======
 		writeBox.getChildren().addAll(console); // ConsolenAusgabe 
->>>>>>> refs/remotes/origin/DenisStuff
 		borderPane.setBottom(console);
 	}
 
@@ -206,12 +174,6 @@ public class Screen extends Scene{
 
 		/* fuege die komponenten hinzu */ 
 		MenuItem newFile = new MenuItem("New File"); 
-<<<<<<< HEAD
-		newFile.setOnAction((event) -> showChoiceInput());
-		
-		menu.getItems().addAll(newFile); 
-		
-=======
 		MenuItem importFile = new MenuItem("refresh Projects"); 
 		MenuItem exportFile = new MenuItem("zip-Project"); 
 
@@ -223,7 +185,6 @@ public class Screen extends Scene{
 
 		menu.getItems().addAll(newFile, importFile, exportFile); 
 
->>>>>>> refs/remotes/origin/DenisStuff
 		return menu; 
 	}
 
@@ -231,14 +192,6 @@ public class Screen extends Scene{
 		Menu menu = new Menu("Run"); 
 
 		/* fuege die komponenten hinzu */ 
-<<<<<<< HEAD
-		MenuItem runFile = new MenuItem("Run"); 
-		
-		runFile.setOnAction((event) -> compileProjekt());
-		
-		menu.getItems().addAll(runFile); 
-		
-=======
 
 
 		MenuItem compileREDFile = new MenuItem("Phase RED: Compile Test"); 
@@ -258,7 +211,6 @@ public class Screen extends Scene{
 
 		menu.getItems().addAll(compileREDFile, compileGREENFile,refactorFile  ); 
 
->>>>>>> refs/remotes/origin/DenisStuff
 		return menu; 
 	}
 
@@ -303,65 +255,7 @@ public class Screen extends Scene{
 	 *       - Einen Thread erstellen der immer den aktuellen Tab bestimmt
 	 */
 	private Task getCurrentTab(){		
-<<<<<<< HEAD
-	
-		for(int i = 0; i < tabPane.getTabs().size(); i++){
-			Task currentTab =  (Task) tabPane.getTabs().get(i); 
-			if(currentTab.isSelected()){
-				System.out.println("CURRENT TAB: "+currentTab.getTabName());
-				return currentTab;   				 
-			}
-		}  	
-		return null;    
-	}
-=======
->>>>>>> refs/remotes/origin/DenisStuff
 
-<<<<<<< HEAD
-
-	private void showChoiceInput(){
-		if(dialogData.size() > 0){
-			dialogData = folderManager.getFolderNames(); 
-		Dialog<String>dialog = new ChoiceDialog(dialogData.get(0), dialogData);
-	    
-		dialog.setTitle("What Task would you like to Open");
-		dialog.setHeaderText("Select your choice");
-
-		Optional<String> result = dialog.showAndWait();
-		String selected = "cancelled.";
-				
-		if (result.isPresent()) {
-
-		    selected = result.get();
-		    
-		    if(!tabs.containsKey(selected)){
-		    tabs.put(selected,new Task(selected)); 
-		    }
-		    else{
-		    	tabPane.getTabs().remove(tabs.get(selected)); 		    	
-		    }
-		    
-		    
-		}
-
-		//addTabToScreen(selected); 
-			tabPane.getTabs().add(tabs.get(selected))	; 
-	}
-		
-
-		
-	}
-	
-	public void compileProjekt(){
-		
-		//ArrayList<String> errors = tester.filesWithSyntaxError(getCurrentTab().filesInProject()); 
-		System.out.println("TESTS ARE: \n"+getCurrentTab().testsInProject());
-		System.out.println("SOURCES ARE: \n"+getCurrentTab().sourcesInProject());
-		Task tab = getCurrentTab(); 
-		for(String errorMsg : tab.compileAndShowResult())
-		console.appendText(errorMsg); 
-		
-=======
 		for(int i = 0; i < tabPane.getTabs().size(); i++){
 			Task currentTab =  (Task) tabPane.getTabs().get(i); 
 			if(currentTab.isSelected()){
@@ -370,13 +264,8 @@ public class Screen extends Scene{
 			}
 		}  	
 		return null;    
->>>>>>> refs/remotes/origin/DenisStuff
 	}
 
-<<<<<<< HEAD
-	
-	
-=======
 
 	private void showChoiceInput(){
 		if(dialogData.size() > 0){
@@ -715,7 +604,6 @@ public class Screen extends Scene{
 
 	}
 
->>>>>>> refs/remotes/origin/DenisStuff
 
 }
 

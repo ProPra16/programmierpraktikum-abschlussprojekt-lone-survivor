@@ -30,11 +30,7 @@ public class MainApp extends Application {
  
    @Override
    public void start(Stage mainStage) {
-<<<<<<< HEAD
-      mainStage.setTitle("AADMS"); // Andreas, Andreas, Denis, Marc, Sebastian (Alphabetisch)      
-=======
       mainStage.setTitle("ADAMS"); // Andreas, Andreas, Denis, Marc, Sebastian      
->>>>>>> refs/remotes/origin/DenisStuff
       mainStage.getIcons().add(new Image("icon.jpg"));
       
       mainStage.setScene(new Screen(640,400));

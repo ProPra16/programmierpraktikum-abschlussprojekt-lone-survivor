@@ -1,8 +1,0 @@
-
-	import ...
-
-	public class is
-	{
-
-	}
-	

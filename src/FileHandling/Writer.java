@@ -4,15 +4,11 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-<<<<<<< HEAD
-
-=======
 /**
  * 
  * @author AndreasLüpertz
  *
  */
->>>>>>> refs/remotes/origin/DenisStuff
 public class Writer extends FolderManager{
 	String input;
 	String fileName;
