@@ -22,7 +22,7 @@ public class CreatableTab extends Tab{
 	ArrayList<Object> components = new ArrayList<>(); /* enthaelt alle Komponenten */ 
 	String tabName = "NO Name Given"; 
 	HBox hbox = new HBox(); /* Hier soll der Content des Tabs abgelegt werden.
-	                           HBox kann auch bei Bedarf geaendert werden.      */ 
+	                           HBox kann auch bei Bedarf geändert werden.      */ 
 	
 	VBox Vbox = new VBox();
 	StackPane stackPane = new StackPane();
@@ -30,7 +30,9 @@ public class CreatableTab extends Tab{
 	TextArea writeArea = null; 
 	TextArea testArea  = null; 
 	TextArea taskArea  = null; 
-	TreeView contents   = null; 
+	TreeView contents  = null; 
+	Label    status    = null; 
+	Label    time      = null; 
 	
 	Label    consoleMsg  = new Label(""); 
 	
@@ -67,6 +69,7 @@ public class CreatableTab extends Tab{
 	}
 	
 	public void addAllComponents(){
+		
 		if(writeArea != null && !hbox.getChildren().contains(writeArea))
 			hbox.getChildren().add(writeArea);
 		if(testArea != null&& !hbox.getChildren().contains(testArea))
@@ -77,8 +80,17 @@ public class CreatableTab extends Tab{
 			hbox.getChildren().add(consoleMsg);
 		if(contents != null){		
 			Vbox.getChildren().addAll(contents); 
-			hbox.getChildren().addAll(Vbox); 
+			
 		}
+		if(time != null){
+			Vbox.getChildren().add(time); 
+			
+		}
+		if(status != null){
+			Vbox.getChildren().add(status); 
+		}
+		
+		hbox.getChildren().addAll(Vbox); 
 
 		super.setContent(hbox); 
 	}
@@ -110,7 +122,11 @@ public class CreatableTab extends Tab{
     		
     	
     }
+    
     public void setContentTree(TreeView newView){ contents = newView;}
+    public void setStatusLabel(Label label)     { status = label ; }
+    public void setTimeLabel(Label label)       { time = label;} 
+    
 	public void setWriteArea(TextArea newArea){	writeArea = newArea;  }
 	public void setTestArea(TextArea newArea){ testArea = newArea; }
 	public void setTaskArea(TextArea newArea){ taskArea = newArea; }

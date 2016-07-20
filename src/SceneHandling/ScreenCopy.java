@@ -47,7 +47,7 @@ import javafx.scene.layout.VBox;
  * @author Marc Feger                                                                  *                                                                             *
  ***************************************************************************************/
 
-public class Screen extends Scene{
+public class ScreenCopy extends Scene{
 
 	static Group root = new Group();
 
@@ -68,24 +68,20 @@ public class Screen extends Scene{
 	List<String> dialogData = folderManager.getFolderNames(); 
 
 	Timer timer = new Timer();    
-	
-	Timer babyTimer = new Timer();
-	
+
 	HBox writeBox = new HBox(); // fuer die Eingabe der Methoden und Tests, sowie der Ausgabe ueber eine Konsole
 	TextArea console = new TextArea(); 
 	TextArea methodArea = new TextArea();   
 	TextArea testArea = new TextArea(); 
 
-	BabyStep babyStep = new BabyStep();
 
-	public Screen(double width, double height) {
+	public ScreenCopy(double width, double height) {
 		super(root, width, height);
 
 		initComponents();
 
 		root.getChildren().addAll(borderPane); 
 
-	//	babyTimer.schedule(babyStep, 1000,1000);
 		timer.schedule(new AutoSaver(), 1000, 1000); // fuehrt alle einhundert millisekunden einen autosave durch 
 	}
 
@@ -155,10 +151,13 @@ public class Screen extends Scene{
 		 * Hier koennen alle Komponenten fuer die Anzeige-
 		 * eingefuegt werden.
 		 */
-		
-		menuBar.getMenus().addAll(fileMenu(), runMenu());  
-		
-		
+		if(menuBar.getMenus().size() == 0){
+			menuBar.getMenus().addAll(fileMenu(), runMenu());  
+		}
+		else {		
+			menuBar.getMenus().remove(1);		
+			menuBar.getMenus().add(runMenu()); 
+		}
 		/* Lege die MenuAnzeige in der borderPane an
 		 * Nicht entfernen
 		 */
@@ -195,26 +194,23 @@ public class Screen extends Scene{
 		/* fuege die komponenten hinzu */ 
 
 
-		MenuItem compile = new MenuItem("Compile"); 
-		MenuItem leave = new MenuItem("Leave Refactoring"); 
-		//MenuItem compileGREENFile = new MenuItem("Phase GREEN: Compile Test"); 
-		// MenuItem refactorFile = new MenuItem("Refactor Test"); 
-/*
+		MenuItem compileREDFile = new MenuItem("Phase RED: Compile Test"); 
+		MenuItem compileGREENFile = new MenuItem("Phase GREEN: Compile Test"); 
+		MenuItem refactorFile = new MenuItem("Refactor Test"); 
+
 		if(getCurrentTab()!= null){
 			compileREDFile.setDisable(!getCurrentTab().isPhaseRED());
 			compileGREENFile.setDisable(!getCurrentTab().isPhaseGREEN()); 
 			refactorFile.setDisable(!getCurrentTab().isRefactoring());
 			console.appendText("RED: "+getCurrentTab().isPhaseRED()+ "\nGREEN: "+getCurrentTab().isPhaseGREEN()+"\nREF "+getCurrentTab().isRefactoring()+"\n");
 		}
-*/
 
 
-	//	menu.setOnAction((event)-> doCompileSteps(event, menu, compileREDFile, compileGREENFile, refactorFile));
-		menu.setOnAction((event)-> doCompileSteps(event, compile, leave));
 
-	//	menu.getItems().addAll(compileREDFile, compileGREENFile,refactorFile  ); 
-        menu.getItems().addAll(compile, leave); 
-		//menu.getItems().addAll(menu); 
+		menu.setOnAction((event)-> doCompileSteps(event, menu, compileREDFile, compileGREENFile, refactorFile));
+
+		menu.getItems().addAll(compileREDFile, compileGREENFile,refactorFile  ); 
+
 		return menu; 
 	}
 
@@ -306,34 +302,30 @@ public class Screen extends Scene{
 
 
 
-	public void doCompileSteps(Event event, MenuItem compile, MenuItem leave){
-		
-		
-		
-		//initMenuBar();
-		if(event.getTarget() == compile)
-			System.out.println("KLICK KLICK KLICK KLICK ");
-			
+	public void doCompileSteps(Event event, Menu menu, MenuItem compileREDFile, MenuItem compileGREENFile, MenuItem refactorFile){
+		initMenuBar();
 		Tester tester = new Tester(); 
 		Reader reader = new Reader(); 
-		
+
+		Timer babyTimer = new Timer(); 
+		BabyStep babyStep = new BabyStep();
 		babyStep.saveDatas(); 
 
 		//babyTimer.schedule(babyStep, 100, 1000);
 
-	//	if(getCurrentTab().haveBabySteps){
-			//babyTimer.schedule(babyStep, 100, 60000); // alles was vor dem Starten durch run geschehen ist wird gelöscht
-		//	console.appendText("Have BabySteps");
-	//	}
+		if(getCurrentTab().haveBabySteps){
+			babyTimer.schedule(babyStep, 100, 60000); // alles was vor dem Starten durch run geschehen ist wird gelöscht
+			console.appendText("Have BabySteps");
+		}
 
 
-		
+		aktButtons(compileREDFile, compileGREENFile, refactorFile);
 
 
 
 		// Stufe eins: einen Test schreiben der fehl schlaegt 
 
-		if(getCurrentTab().isPhaseRED() && event.getTarget() == compile ){		
+		if(event.getTarget() == compileREDFile ){		
 
 			tester = new Tester(); 
 
@@ -372,17 +364,17 @@ public class Screen extends Scene{
 				getCurrentTab().setPhaseRED(false);
 				getCurrentTab().setPhaseGREEN(true);
 				getCurrentTab().setRefactoring(false);
-				//getCurrentTab().aktualisiere(); 
+				getCurrentTab().aktualisiere(); 
 				console.appendText(getCurrentTab().getTabName()+" "+getCurrentTab().isPhaseRED());
-			
+				this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
 			}
 			else {
 				console.appendText("Please write any Test that fails or watch other Tests\n");
-				
+				this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
 			}
 		}
 
-		if(getCurrentTab().isPhaseGREEN() && event.getTarget() == compile ){
+		if(event.getTarget() == compileGREENFile){
 
 
 			tester = new Tester(); 
@@ -400,6 +392,7 @@ public class Screen extends Scene{
 
 			}
 
+
 			for(String sourceFiles : getCurrentTab().sourcesInProject()){
 
 
@@ -413,6 +406,7 @@ public class Screen extends Scene{
 				tester.classehinzufuegen(methodName, methodCode, false);
 			}
 
+
 			if(tester.Fehlererkennung() == false ){
 				console.appendText("Refactor the code \n");
 				// fuehre durch die steps 
@@ -420,16 +414,20 @@ public class Screen extends Scene{
 				getCurrentTab().setPhaseGREEN(false);
 				getCurrentTab().setRefactoring(true);
 				
-				//getCurrentTab().aktualisiere(); 
+				this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
 			}
 			else {
 				console.appendText("The Test is not solved \n");
 				console.appendText( tester.getErrorMessage()+"\n");
-				
+				this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
 			}
+
+
+
+
 		}
-		
-		if(getCurrentTab().isRefactoring() && event.getTarget() == leave){
+
+		if(event.getTarget() == refactorFile){
 
 			tester = new Tester(); 
 
@@ -467,18 +465,21 @@ public class Screen extends Scene{
 				getCurrentTab().setPhaseGREEN(false);
 				getCurrentTab().setRefactoring(false);				
 				
-				//getCurrentTab().aktualisiere(); 
+				this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
 				babyStep.saveDatas(); 
 
 			}
 			else {
 				console.appendText("Still wrong code \n");
 				console.appendText( tester.getErrorMessage()+"\n");
+				this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
 			}
-		}			
 
 
-	
+
+		}	
+		this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
+
 	}	
 
 	public void importFromServer(){		
@@ -507,7 +508,6 @@ public class Screen extends Scene{
 		@Override
 		public void run() {
 			if(getCurrentTab() != null)
-				//if(!getCurrentTab().haveBabySteps)
 				if(!getCurrentTab().getWriteArea().getText().isEmpty() && !getCurrentTab().getTestArea().getText().isEmpty()){
 
 
@@ -531,12 +531,6 @@ public class Screen extends Scene{
 
 
 	class BabyStep extends TimerTask {
-		
-		public BabyStep(){
-		 
-			run(); 
-			
-		}
 
 		ArrayList<String[]> datas = new ArrayList<>(); 
 		ArrayList<String[]> oldTests = new ArrayList<>(); 
@@ -575,15 +569,11 @@ public class Screen extends Scene{
 
 		@Override
 		public void run() {
-            console.appendText("BABYSTEPING\n");
-			//if(doSteps == true){
-			
-			if(getCurrentTab() != null){
-				console.appendText("BabyStep made, be faster \n" );
-				if(getCurrentTab().clock.timeIsUp == true){	
-					saveDatas(); 
+
+			if(doSteps == true){
+				if(getCurrentTab() != null)
 					if(!getCurrentTab().getWriteArea().getText().isEmpty() && !getCurrentTab().getTestArea().getText().isEmpty()){		
-						//console.appendText("BabyStep made, be faster \n" );
+						console.appendText("BabyStep made, be faster \n" );
 
 						// babysteps vorbereiten 
 						for(String[] des : oldTests){
@@ -612,7 +602,6 @@ public class Screen extends Scene{
 			}else{
 				console.appendText("No BabySteps");
 			}
-		}
 		}
 
 

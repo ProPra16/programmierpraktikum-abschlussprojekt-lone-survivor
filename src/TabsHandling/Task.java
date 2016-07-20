@@ -3,14 +3,12 @@ package TabsHandling;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.TimerTask;
 
-import CompilerHandling.Tester;
 import FileHandling.FolderManager;
 import FileHandling.Reader;
 import FileHandling.Writer;
 import PopUpHandling.PopUpDialog;
-import StringHandling.StringFilter;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -38,12 +36,15 @@ public class Task extends CreatableTab{
 	boolean isPhaseGREEN  = false; 
 	boolean isPhaseRED    = true ; 
     public boolean haveBabySteps = xmlReader.babysteps(); 
-
+   
+    PhasenAnzeige phaseStatus = new PhasenAnzeige(true, false, false); 
+    BackgroundActions backaction = new BackgroundActions();
+    public Clock clock = new Clock(isSelected()); 
 
 	public Task(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub
-		createTab(); 	
+		createTab();
 		
 	}
 
@@ -155,10 +156,24 @@ public class Task extends CreatableTab{
 		setRefactoring(false); 
 		setPhaseGREEN(false); 
 		setPhaseRED(true); 
+		
+		//aktualisiere(); 
 
-		super.addAllComponents(); 
+		super.setStatusLabel(phaseStatus);
+		
+	    babyStepConfic(); 
+		
+	    super.addAllComponents(); 
 	}
 
+	public void babyStepConfic(){
+		if(this.haveBabySteps == true){
+		clock.setEnde((int)xmlReader.babystepsValue() / 1000); ////////////// veraendern
+	//	clock.setEnde(50);
+		super.setTimeLabel(clock);
+		backaction.start();
+		}
+	}
 
 
 
@@ -284,14 +299,51 @@ public class Task extends CreatableTab{
 	public boolean xmlExists(){ return xmlExists; }
 	public ArrayList<String> filesInProject(){ return filesInFolder; }
 	
-	public boolean isRefactoring(){ return isRefactoring; }
-	public void setRefactoring(boolean status){ isRefactoring = status; }
-	
 	public boolean isPhaseRED(){ return isPhaseRED; }
-	public void setPhaseRED(boolean status){ isPhaseRED = status; }
+	
+	public void setPhaseRED(boolean status){
+		phaseStatus.setPhaseRED(status); 
+		isPhaseRED = status; }
 	
 	public boolean isPhaseGREEN(){ return isPhaseGREEN; }
-	public void setPhaseGREEN(boolean status){ isPhaseGREEN = status; }
+	
+	public void setPhaseGREEN(boolean status){
+		phaseStatus.setPhaseGREEN(status);
+		isPhaseGREEN = status; }
+	
+    public boolean isRefactoring(){ return isRefactoring; }
+	
+	public void setRefactoring(boolean status){ 
+		phaseStatus.setRefactoring(status);
+		isRefactoring = status; }
+	
+	
+	public void aktualisiere(){
+	
+		Label timeLabel = new Label(); 
+		
+		String color = ""; 
+				
+		if(isPhaseRED()){
+			timeLabel.setStyle("-fx-border-color:black; -fx-background-color: red;"); 
+			System.out.println("RED");
+		}
+		else if(isPhaseGREEN()){
+			timeLabel.setStyle("-fx-border-color:black; -fx-background-color: green;"); 
+			System.out.println("GREEN");
+		}
+		else if(isRefactoring()){
+			timeLabel.setStyle("-fx-border-color:black; -fx-background-color: blue"); 
+			System.out.println("BLUE"); 
+		}
+			
+		//timeLabel.setStyle(color);
+		
+		timeLabel.prefWidthProperty().bind(super.Vbox.widthProperty());
+		
+			
+		super.setTimeLabel(timeLabel);
+	}
 	
 	public ArrayList<String> testsInProject(){
 		ArrayList<String> testClasses = new ArrayList<>(); 
@@ -323,6 +375,33 @@ public class Task extends CreatableTab{
 		}
 		}
 		return sourcesClasses; 
+	}
+	
+	
+	class BackgroundActions extends Thread{
+		
+		@Override
+		public void run(){
+			
+					
+			while(true){
+				clock.setSelected(isSelected());	
+				if(isSelected()){
+				clock.setSelected(isSelected());	
+				System.out.println(getTabName()+": is selected "+isSelected());
+				System.out.println(getTabName()+": time is up "+clock.timeIsUp());
+				
+				}
+				
+			}
+			
+	       
+		}
+		
+		BackgroundActions(){
+			super.run();
+		}
+		
 	}
 
 
