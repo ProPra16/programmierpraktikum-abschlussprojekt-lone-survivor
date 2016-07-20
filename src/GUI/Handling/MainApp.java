@@ -31,7 +31,7 @@ public class MainApp extends Application {
    @Override
    public void start(Stage mainStage) {
       mainStage.setTitle("ADAMS"); // Andreas, Andreas, Denis, Marc, Sebastian      
-      mainStage.getIcons().add(new Image("bilder/icon.jpg"));
+    // mainStage.getIcons().add(new Image("bilder/icon.jpg"));
       
       mainStage.setScene(new Screen(640,400));
       mainStage.show();
