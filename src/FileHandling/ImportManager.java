@@ -28,11 +28,11 @@ import javafx.stage.StageStyle;
 /**
  * Dowonloadcode von:
  * http://stackoverflow.com/questions/8253852/how-to-download-a-zip-file-from-a-
- * url-and-store-them-as-zip-file-only Jedoch modifiziert und geändert
+ * url-and-store-them-as-zip-file-only Jedoch modifiziert und geaendert
  * 
  * Code zum Unzippen von:
  * http://www.mkyong.com/java/how-to-decompress-files-from-a-zip-file/ Jedoch
- * modifiziert und geändert
+ * modifiziert und geaendert
  * 
  * @author Sebastian Stock
  * @version 1.0
@@ -109,7 +109,7 @@ public class ImportManager {
 	}
 
 	/*
-	 * Fuehrt einen vollständigen Donwload und Entpackvorgang an der vorgegeben
+	 * Fuehrt einen vollstaendigen Donwload und Entpackvorgang an der vorgegeben
 	 * Stelle aus
 	 *
 	 * destination = url ,finalDestination = Zieladresse+Name

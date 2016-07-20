@@ -201,7 +201,7 @@ public class XMLReader {
   }
 
   	/*
-     * Gibt den Wert zurueck der die Babysteps in Millisekunden repräsentiert
+     * Gibt den Wert zurueck der die Babysteps in Millisekunden repraesentiert
      * Prueft vorher ob Babysteps enabeld sind, gibt ansonsten 0 zurueck
      */
     public double babystepsValue()
