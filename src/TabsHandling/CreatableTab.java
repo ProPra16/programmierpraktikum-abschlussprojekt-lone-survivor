@@ -22,7 +22,7 @@ public class CreatableTab extends Tab{
 	ArrayList<Object> components = new ArrayList<>(); /* enthaelt alle Komponenten */ 
 	String tabName = "NO Name Given"; 
 	HBox hbox = new HBox(); /* Hier soll der Content des Tabs abgelegt werden.
-	                           HBox kann auch bei Bedarf geändert werden.      */ 
+	                           HBox kann auch bei Bedarf geaendert werden.      */ 
 	
 	VBox Vbox = new VBox();
 	StackPane stackPane = new StackPane();

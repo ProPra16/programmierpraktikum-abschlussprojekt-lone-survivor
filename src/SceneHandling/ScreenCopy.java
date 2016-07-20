@@ -119,7 +119,7 @@ public class ScreenCopy extends Scene{
 	 * @ToDo: 
 	 *       - Die Komponenten der HBox in eine ArrayList packen
 	 *       - Die die HBox kann ersetzt werden falls erforderlich
-	 *       - Die Buttons müssen den Aktuellen Reiter etc. kennen
+	 *       - Die Buttons muessen den Aktuellen Reiter etc. kennen
 	 */
 	private void initMenuePane(){
 		/* 
@@ -314,7 +314,7 @@ public class ScreenCopy extends Scene{
 		//babyTimer.schedule(babyStep, 100, 1000);
 
 		if(getCurrentTab().haveBabySteps){
-			babyTimer.schedule(babyStep, 100, 60000); // alles was vor dem Starten durch run geschehen ist wird gelöscht
+			babyTimer.schedule(babyStep, 100, 60000); // alles was vor dem Starten durch run geschehen ist wird geloescht
 			console.appendText("Have BabySteps");
 		}
 
