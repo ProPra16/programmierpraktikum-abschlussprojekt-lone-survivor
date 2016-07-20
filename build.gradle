@@ -4,17 +4,24 @@ apply plugin: 'maven'
 group 'de.hhu.propra16.abschlussprojekt'
 version '1.01-TEST'
 
+dependencies { 
+     compile 'junit:junit:4.12'
+     compile 'de.hhu.stups:virtual-kata-lib:1.0.1'
+
+      }
+      
+sourceSets{
+   main.java.srcDir "src/"
+   main.resources.srcDirs   "src/bilder"
+   
+}
+
 repositories {
 	mavenCentral();
 }
 
-dependencies {
-	testCompile 'de.hhu.stups:virtual-kata-lib:1.0.1'
-	testCompile 'junit:junit:4.12'
-}
 
-jar {
-	manifest {
-		attributes 'Main-Class': 'GUI.Handling.MainApp'
-	}
+jar { 
+        from configurations.compile.collect {zipTree it}
+		manifest.attributes 'Main-Class': 'GUI.Handling.MainApp'
 }
