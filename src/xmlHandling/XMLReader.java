@@ -177,7 +177,7 @@ public class XMLReader {
   	
 
   	/*
-  	 * Gibt ein boolean zurück ob für diese Aufgabe Babysteps vorgesehen sind
+  	 * Gibt ein boolean zurueck ob fuer diese Aufgabe Babysteps vorgesehen sind
   	 */
   public boolean babysteps()
   {
@@ -201,8 +201,8 @@ public class XMLReader {
   }
 
   	/*
-     * Gibt den Wert zurück der die Babysteps in Millisekunden repräsentiert
-     * Prüft vorher ob Babysteps enabeld sind, gibt ansonsten 0 zurück
+     * Gibt den Wert zurueck der die Babysteps in Millisekunden repräsentiert
+     * Prueft vorher ob Babysteps enabeld sind, gibt ansonsten 0 zurueck
      */
     public double babystepsValue()
     {

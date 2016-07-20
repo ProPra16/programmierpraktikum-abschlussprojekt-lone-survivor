@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 /**
  * 
- * @author AndreasLüpertz
+ * @author AndreasLuepertz
  *
  */
 public class Writer extends FolderManager{

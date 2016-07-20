@@ -31,7 +31,7 @@ public class Tester {
 	int pass = 0;
     
 
-    // bekommt classname (vorallem filename)  und die class( gesamten file inhalt), als übergabeprameter,auserdem ture wenn es sich um eine junit klasse handelt
+    // bekommt classname (vorallem filename)  und die class( gesamten file inhalt), als uebergabeprameter,auserdem ture wenn es sich um eine junit klasse handelt
 	public Tester(String classname, String compileclass,boolean Testklasse){	
 		CompilationUnit compileunit= new CompilationUnit(classname,compileclass, Testklasse);
 		compileunits = new CompilationUnit[n+1];
@@ -41,8 +41,8 @@ public class Tester {
 		compileunits = new CompilationUnit[1];
 	}
 	
-    // bekommt classname (vorallem filename)  und die class( gesamten file inhalt), als übergabeprameter ,auserdem ture wenn es sich um eine junit klasse handelt
-    public void classehinzufügen(String classname, String compileclass,boolean Testklasse){
+    // bekommt classname (vorallem filename)  und die class( gesamten file inhalt), als uebergabeprameter ,auserdem ture wenn es sich um eine junit klasse handelt
+    public void classehinzufuegen(String classname, String compileclass,boolean Testklasse){
 		CompilationUnit compileunit= new CompilationUnit(classname,compileclass, Testklasse);
 		n = n+1;
 		CompilationUnit[] arr = new CompilationUnit[n];

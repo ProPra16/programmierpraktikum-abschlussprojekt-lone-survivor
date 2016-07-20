@@ -9,11 +9,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /*
- * Code für das Zippen von:
+ * Code fuer das Zippen von:
  * http://javabeginners.de/Dateien_und_Verzeichnisse/Zip-Operationen/Zip-Archiv_erstellen.php
  * Angepasst, um mehrere Dateien in ein Archiv zu packen.
  * 
- * @author Andreas Lüpertz
+ * @author Andreas Luepertz
  * @version 1.0
  *
  */

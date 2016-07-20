@@ -48,7 +48,7 @@ public class ImportManager {
 	public ImportManager() {} //Standardkonstruktor
 	
 	/*
-	 * Konstruktor für einen Donwnload mit Ladeschirmanzeige. Übergabe der Stage mit new ImportManager(..., new Stage());
+	 * Konstruktor fuer einen Donwnload mit Ladeschirmanzeige. uebergabe der Stage mit new ImportManager(..., new Stage());
 	 */
 	public ImportManager(String destination, String finalDestination, String outputName, Stage stage)
 	{
@@ -109,7 +109,7 @@ public class ImportManager {
 	}
 
 	/*
-	 * Führt einen vollständigen Donwload und Entpackvorgang an der vorgegeben
+	 * Fuehrt einen vollständigen Donwload und Entpackvorgang an der vorgegeben
 	 * Stelle aus
 	 *
 	 * destination = url ,finalDestination = Zieladresse+Name
@@ -255,7 +255,7 @@ public class ImportManager {
 	}
 
 	/*
-	 * Löscht das angegeben Zip File destination = path,
+	 * Loescht das angegeben Zip File destination = path,
 	 * 
 	 */
 	public void remove(String destination) {

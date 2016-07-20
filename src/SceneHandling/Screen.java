@@ -119,7 +119,7 @@ public class Screen extends Scene{
 	 * @ToDo: 
 	 *       - Die Komponenten der HBox in eine ArrayList packen
 	 *       - Die die HBox kann ersetzt werden falls erforderlich
-	 *       - Die Buttons müssen den Aktuellen Reiter etc. kennen
+	 *       - Die Buttons muessen den Aktuellen Reiter etc. kennen
 	 */
 	private void initMenuePane(){
 		/* 
@@ -314,7 +314,7 @@ public class Screen extends Scene{
 		//babyTimer.schedule(babyStep, 100, 1000);
 
 		if(getCurrentTab().haveBabySteps){
-			babyTimer.schedule(babyStep, 100, 60000); // alles was vor dem Starten durch run geschehen ist wird gelöscht
+			babyTimer.schedule(babyStep, 100, 60000); // alles was vor dem Starten durch run geschehen ist wird geloescht
 			console.appendText("Have BabySteps");
 		}
 
@@ -338,7 +338,7 @@ public class Screen extends Scene{
 
 				System.out.println("NAME: "+ testName);
 				System.out.println("Code: "+ testCode);
-				tester.classehinzufügen(testName, testCode, true);
+				tester.classehinzufuegen(testName, testCode, true);
 			}
 
 
@@ -352,7 +352,7 @@ public class Screen extends Scene{
 
 				System.out.println("NAME: "+ methodName);
 				System.out.println("Code: "+ methodCode);			
-				tester.classehinzufügen(methodName, methodCode, false);
+				tester.classehinzufuegen(methodName, methodCode, false);
 			}
 
 
@@ -387,7 +387,7 @@ public class Screen extends Scene{
 
 				System.out.println("NAME: "+ testName);
 				System.out.println("Code: "+ testCode);
-				tester.classehinzufügen(testName, testCode, true);
+				tester.classehinzufuegen(testName, testCode, true);
 
 			}
 
@@ -402,7 +402,7 @@ public class Screen extends Scene{
 
 				System.out.println("NAME: "+ methodName);
 				System.out.println("Code: "+ methodCode);			
-				tester.classehinzufügen(methodName, methodCode, false);
+				tester.classehinzufuegen(methodName, methodCode, false);
 			}
 
 
@@ -438,7 +438,7 @@ public class Screen extends Scene{
 
 				System.out.println("NAME: "+ testName);
 				System.out.println("Code: "+ testCode);
-				tester.classehinzufügen(testName, testCode, true);
+				tester.classehinzufuegen(testName, testCode, true);
 
 			}
 
@@ -453,7 +453,7 @@ public class Screen extends Scene{
 
 				System.out.println("NAME: "+ methodName);
 				System.out.println("Code: "+ methodCode);			
-				tester.classehinzufügen(methodName, methodCode, false);
+				tester.classehinzufuegen(methodName, methodCode, false);
 			}
 
 			if(tester.Fehlererkennung() == false ){
