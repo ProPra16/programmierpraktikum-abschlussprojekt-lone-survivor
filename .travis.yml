@@ -1,7 +1,14 @@
-language: java
-jdk:
-    - oraclejdk8
-    
-sudo: false
 
-script: gradle build
+language: java
+
+jdk: oraclejdk8
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+install: /bin/true
+script:
+  - echo "Hello Build"
+  - gradle clean build
+  - echo "Done"
