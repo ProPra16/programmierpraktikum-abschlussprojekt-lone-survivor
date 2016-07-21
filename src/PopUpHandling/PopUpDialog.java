@@ -51,7 +51,7 @@ public class PopUpDialog {
 		ButtonType resetBtn = new ButtonType("Reset");
 		
 	//	ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-		//ImageView view = new ImageView("bilder/oldFilesFound.jpg"); 
+		ImageView view = new ImageView("bilder/oldFilesFound.jpg"); 
 		ImageView view = new ImageView(); 
 		view.setFitWidth(100);
 		view.setFitHeight(100);
