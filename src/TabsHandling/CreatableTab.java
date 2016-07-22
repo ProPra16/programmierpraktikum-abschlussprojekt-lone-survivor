@@ -117,7 +117,7 @@ public class CreatableTab extends Tab{
     	  
     		removeObject(consoleMsg);
     		consoleMsg = new Label(newLabel.getText()); 
-    		System.out.println("New Label");
+    		//System.out.println("New Label");
     		aktComponents();
     		
     	

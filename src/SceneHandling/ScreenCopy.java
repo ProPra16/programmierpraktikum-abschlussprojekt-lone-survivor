@@ -119,7 +119,7 @@ public class ScreenCopy extends Scene{
 	 * @ToDo: 
 	 *       - Die Komponenten der HBox in eine ArrayList packen
 	 *       - Die die HBox kann ersetzt werden falls erforderlich
-	 *       - Die Buttons muessen den Aktuellen Reiter etc. kennen
+	 *       - Die Buttons mueessen den Aktuellen Reiter etc. kennen
 	 */
 	private void initMenuePane(){
 		/* 

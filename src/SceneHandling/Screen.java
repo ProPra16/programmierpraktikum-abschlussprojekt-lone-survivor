@@ -68,15 +68,16 @@ public class Screen extends Scene{
 	List<String> dialogData = folderManager.getFolderNames(); 
 
 	Timer timer = new Timer();    
-	
-	Timer babyTimer = new Timer();
+	AutoSaver saver = new AutoSaver(); 
+	//Timer babyTimer = new Timer();
 	
 	HBox writeBox = new HBox(); // fuer die Eingabe der Methoden und Tests, sowie der Ausgabe ueber eine Konsole
 	TextArea console = new TextArea(); 
 	TextArea methodArea = new TextArea();   
 	TextArea testArea = new TextArea(); 
 
-	BabyStep babyStep = new BabyStep();
+	//BabyStep babyStep = new BabyStep();
+	BabyStep babyStep = new BabyStep(); 
 
 	public Screen(double width, double height) {
 		super(root, width, height);
@@ -86,7 +87,7 @@ public class Screen extends Scene{
 		root.getChildren().addAll(borderPane); 
 
 	//	babyTimer.schedule(babyStep, 1000,1000);
-		timer.schedule(new AutoSaver(), 1000, 1000); // fuehrt alle einhundert millisekunden einen autosave durch 
+		timer.schedule(saver, 100, 100); // fuehrt alle einhundert millisekunden einen autosave durch 
 	}
 
 
@@ -123,7 +124,7 @@ public class Screen extends Scene{
 	 * @ToDo: 
 	 *       - Die Komponenten der HBox in eine ArrayList packen
 	 *       - Die die HBox kann ersetzt werden falls erforderlich
-	 *       - Die Buttons muessen den Aktuellen Reiter etc. kennen
+	 *       - Die Buttons muuessen den Aktuellen Reiter etc. kennen
 	 */
 	private void initMenuePane(){
 		/* 
@@ -197,25 +198,12 @@ public class Screen extends Scene{
 
 		MenuItem compile = new MenuItem("Compile"); 
 		MenuItem leave = new MenuItem("Leave Refactoring"); 
-		//MenuItem compileGREENFile = new MenuItem("Phase GREEN: Compile Test"); 
-		// MenuItem refactorFile = new MenuItem("Refactor Test"); 
-/*
-		if(getCurrentTab()!= null){
-			compileREDFile.setDisable(!getCurrentTab().isPhaseRED());
-			compileGREENFile.setDisable(!getCurrentTab().isPhaseGREEN()); 
-			refactorFile.setDisable(!getCurrentTab().isRefactoring());
-			console.appendText("RED: "+getCurrentTab().isPhaseRED()+ "\nGREEN: "+getCurrentTab().isPhaseGREEN()+"\nREF "+getCurrentTab().isRefactoring()+"\n");
-		}
-*/
-
-
-	//	menu.setOnAction((event)-> doCompileSteps(event, menu, compileREDFile, compileGREENFile, refactorFile));
+	
 		menu.setOnAction((event)-> doCompileSteps(event, compile, leave));
 
-	//	menu.getItems().addAll(compileREDFile, compileGREENFile,refactorFile  ); 
+
         menu.getItems().addAll(compile, leave); 
-		//menu.getItems().addAll(menu); 
-		return menu; 
+			return menu; 
 	}
 
 
@@ -249,7 +237,7 @@ public class Screen extends Scene{
 				output = currentTab.getWriteArea().getText();			 
 			}
 		}  
-		System.out.println(output);
+		//System.out.println(output);
 		return output;    
 	}
 	/*
@@ -263,7 +251,7 @@ public class Screen extends Scene{
 		for(int i = 0; i < tabPane.getTabs().size(); i++){
 			Task currentTab =  (Task) tabPane.getTabs().get(i); 
 			if(currentTab.isSelected()){
-				System.out.println("CURRENT TAB: "+currentTab.getTabName());				
+			//	System.out.println("CURRENT TAB: "+currentTab.getTabName());				
 				return currentTab;   				 
 			}
 		}  	
@@ -292,60 +280,45 @@ public class Screen extends Scene{
 				else{
 					tabPane.getTabs().remove(tabs.get(selected)); 		    	
 				}
-
-
 			}
 
 			//addTabToScreen(selected); 
 			tabPane.getTabs().add(tabs.get(selected))	; 
+			babyStep.saveDatas();     ////////////////////////////////////////////
+			
 		}
-
-
 
 	}
 
 
 
 	public void doCompileSteps(Event event, MenuItem compile, MenuItem leave){
-		
-		
+			
 		
 		//initMenuBar();
-		if(event.getTarget() == compile)
-			System.out.println("KLICK KLICK KLICK KLICK ");
-			
+		if(event.getTarget() == compile){
+		
+		}			
 		Tester tester = new Tester(); 
 		Reader reader = new Reader(); 
 		
-		babyStep.saveDatas(); 
-
-		//babyTimer.schedule(babyStep, 100, 1000);
-
-	//	if(getCurrentTab().haveBabySteps){
-			//babyTimer.schedule(babyStep, 100, 60000); // alles was vor dem Starten durch run geschehen ist wird geloescht
-		//	console.appendText("Have BabySteps");
-	//	}
-
-
-		
-
-
-
 		// Stufe eins: einen Test schreiben der fehl schlaegt 
 
 		if(getCurrentTab().isPhaseRED() && event.getTarget() == compile ){		
 
+			getCurrentTab().clock.setSleeping(false);
+			
 			tester = new Tester(); 
 
 			for(String testFiles : getCurrentTab().testsInProject()){
 
-				System.out.println(testFiles);
+				//System.out.println(testFiles);
 				reader.setDestination(testFiles);
 				String testCode = reader.read(); 
 				String testName = StringFilter.filteredName(testCode); 
 
-				System.out.println("NAME: "+ testName);
-				System.out.println("Code: "+ testCode);
+				//System.out.println("NAME: "+ testName);
+				//System.out.println("Code: "+ testCode);
 				tester.classehinzufuegen(testName, testCode, true);
 			}
 
@@ -353,13 +326,13 @@ public class Screen extends Scene{
 			for(String sourceFiles : getCurrentTab().sourcesInProject()){
 
 
-				System.out.println(sourceFiles);
+			//	System.out.println(sourceFiles);
 				reader.setDestination(sourceFiles);
 				String methodCode = reader.read(); 
 				String methodName = StringFilter.filteredName(methodCode); 
 
-				System.out.println("NAME: "+ methodName);
-				System.out.println("Code: "+ methodCode);			
+			//	System.out.println("NAME: "+ methodName);
+			//	System.out.println("Code: "+ methodCode);			
 				tester.classehinzufuegen(methodName, methodCode, false);
 			}
 
@@ -389,13 +362,13 @@ public class Screen extends Scene{
 
 			for(String testFiles : getCurrentTab().testsInProject()){
 
-				System.out.println(testFiles);
+			//	System.out.println(testFiles);
 				reader.setDestination(testFiles);
 				String testCode = reader.read(); 
 				String testName = StringFilter.filteredName(testCode); 
 
-				System.out.println("NAME: "+ testName);
-				System.out.println("Code: "+ testCode);
+			//	System.out.println("NAME: "+ testName);
+			//	System.out.println("Code: "+ testCode);
 				tester.classehinzufuegen(testName, testCode, true);
 
 			}
@@ -403,13 +376,13 @@ public class Screen extends Scene{
 			for(String sourceFiles : getCurrentTab().sourcesInProject()){
 
 
-				System.out.println(sourceFiles);
+			//	System.out.println(sourceFiles);
 				reader.setDestination(sourceFiles);
 				String methodCode = reader.read(); 
 				String methodName = StringFilter.filteredName(methodCode); 
 
-				System.out.println("NAME: "+ methodName);
-				System.out.println("Code: "+ methodCode);			
+			//	System.out.println("NAME: "+ methodName);
+			//	System.out.println("Code: "+ methodCode);			
 				tester.classehinzufuegen(methodName, methodCode, false);
 			}
 
@@ -419,6 +392,7 @@ public class Screen extends Scene{
 				getCurrentTab().setPhaseRED(false);
 				getCurrentTab().setPhaseGREEN(false);
 				getCurrentTab().setRefactoring(true);
+				getCurrentTab().clock.setSleeping(true);
 				
 				//getCurrentTab().aktualisiere(); 
 			}
@@ -435,13 +409,13 @@ public class Screen extends Scene{
 
 			for(String testFiles : getCurrentTab().testsInProject()){
 
-				System.out.println(testFiles);
+			//	System.out.println(testFiles);
 				reader.setDestination(testFiles);
 				String testCode = reader.read(); 
 				String testName = StringFilter.filteredName(testCode); 
 
-				System.out.println("NAME: "+ testName);
-				System.out.println("Code: "+ testCode);
+			//	System.out.println("NAME: "+ testName);
+			//	System.out.println("Code: "+ testCode);
 				tester.classehinzufuegen(testName, testCode, true);
 
 			}
@@ -450,12 +424,12 @@ public class Screen extends Scene{
 			for(String sourceFiles : getCurrentTab().sourcesInProject()){
 
 
-				System.out.println(sourceFiles);
+			//	System.out.println(sourceFiles);
 				reader.setDestination(sourceFiles);
 				String methodCode = reader.read(); 
 				String methodName = StringFilter.filteredName(methodCode); 
 
-				System.out.println("NAME: "+ methodName);
+			//	System.out.println("NAME: "+ methodName);
 				System.out.println("Code: "+ methodCode);			
 				tester.classehinzufuegen(methodName, methodCode, false);
 			}
@@ -465,10 +439,15 @@ public class Screen extends Scene{
 				// fuehre durch die steps
 				getCurrentTab().setPhaseRED(true);
 				getCurrentTab().setPhaseGREEN(false);
-				getCurrentTab().setRefactoring(false);				
+				getCurrentTab().setRefactoring(false);		
+				
+				getCurrentTab().clock.setSleeping(false);
+				getCurrentTab().clock.setTime(0);
+				babyStep.saveDatas();
+				
 				
 				//getCurrentTab().aktualisiere(); 
-				babyStep.saveDatas(); 
+			//	babyStep.saveDatas(); 
 
 			}
 			else {
@@ -480,6 +459,15 @@ public class Screen extends Scene{
 
 	
 	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public void importFromServer(){		
 		String from = "http://upload.worldofplayers.de/files10/Aufgaben.zip"; 
@@ -507,11 +495,14 @@ public class Screen extends Scene{
 		@Override
 		public void run() {
 			if(getCurrentTab() != null)
-				//if(!getCurrentTab().haveBabySteps)
+			
 				if(!getCurrentTab().getWriteArea().getText().isEmpty() && !getCurrentTab().getTestArea().getText().isEmpty()){
 
 
 					Writer writer = new Writer(); 
+					
+				
+					
 					// speichere alle Sources neu				
 					String sourceCode = getCurrentTab().getWriteArea().getText(); 
 					String sourceName = StringFilter.filteredName(sourceCode); 
@@ -522,33 +513,49 @@ public class Screen extends Scene{
 					String testCode = getCurrentTab().getTestArea().getText(); 
 					String testName = StringFilter.filteredName(testCode); 
 					writer.writeJava(testCode, folderManager.getLibaryPath()+"\\"+getCurrentTab().getTabName()+"\\"+testName);
+			
+					
+					getCurrentTab().clock.setSelected(getCurrentTab().isSelected());
+					
+					if(getCurrentTab().isRefactoring()){
+						babyStep.saveDatas();
+						System.out.println("Sichere die Daten");
+					}
+					
+					if(getCurrentTab().clock.timeIsUp == true){
+						getCurrentTab().setPhaseRED(true);
+						getCurrentTab().setPhaseGREEN(false);
+						getCurrentTab().setRefactoring(false);
+						babyStep.refreshScreen();
+					}				
+					
+					
+				
 				}
 
 
 		}
 
 	}
+	
+	
+	class BabyStep  {
 
-
-	class BabyStep extends TimerTask {
-		
-		public BabyStep(){
-		 
-			run(); 
-			
+		public BabyStep(){			
 		}
 
 		ArrayList<String[]> datas = new ArrayList<>(); 
 		ArrayList<String[]> oldTests = new ArrayList<>(); 
 		ArrayList<String[]> oldCodes = new ArrayList<>(); 
 
-		boolean doSteps = true; 
+		
 
 		Reader reader = new Reader(); 
 		Writer writer = new Writer(); 
 
 		public ArrayList<String[]> lastDatas(ArrayList<String> dataDir){			
 
+			 
 			for(String directory : dataDir){
 				reader.setDestination(directory);
 				String[] input = new String[2]; 
@@ -558,66 +565,64 @@ public class Screen extends Scene{
 				input[1] = code ; 
 				if(!datas.contains(input))
 					datas.add(input);
-				System.out.println("SAVED OLD DATAS: " + directory);
+				//System.out.println("SAVED OLD DATAS: " + directory);
 			}
 			return datas; 		
 		}
 
 
-		public void saveDatas(){
+		public void saveDatas(){		
+		
+			
 			oldTests = lastDatas(getCurrentTab().testsInProject()); 
 
 			oldCodes = lastDatas(getCurrentTab().sourcesInProject()); 
-		}
-
-		public boolean getStepping(){ return doSteps; }
-		public void setStepping(boolean isStepping){ doSteps = isStepping; }     
-
-		@Override
-		public void run() {
-            console.appendText("BABYSTEPING\n");
-			//if(doSteps == true){
 			
-			if(getCurrentTab() != null){
-				console.appendText("BabyStep made, be faster \n" );
-				if(getCurrentTab().clock.timeIsUp == true){	
-					saveDatas(); 
-					if(!getCurrentTab().getWriteArea().getText().isEmpty() && !getCurrentTab().getTestArea().getText().isEmpty()){		
-						//console.appendText("BabyStep made, be faster \n" );
+			
+			
+			
+		}
 
-						// babysteps vorbereiten 
-						for(String[] des : oldTests){
-							writer.writeJava(des[1],folderManager.getLibaryPath()+"\\"+ getCurrentTab().getTabName()+"\\"+ des[0]);					
-						}
-						for(String[] des : oldCodes){
-							writer.writeJava(des[1],folderManager.getLibaryPath()+"\\"+ getCurrentTab().getTabName()+"\\"+ des[0]);					
-						}
+	
 
-						// ergaenze dann die betreffenden Texte im Screen 
-						for(String currentData : getCurrentTab().testsInProject()){
-							if(StringFilter.nameFromPath(currentData).equals(StringFilter.filteredName(getCurrentTab().getTestArea().getText()))){
-								reader.setDestination(currentData);
-								getCurrentTab().getTestArea().setText(reader.read());
-							}
-						}
-
-						for(String currentData : getCurrentTab().sourcesInProject()){
-							if(StringFilter.nameFromPath(currentData).equals(StringFilter.filteredName(getCurrentTab().getWriteArea().getText()))){
-								reader.setDestination(currentData);
-								getCurrentTab().getWriteArea().setText(reader.read());
-							}
-						}
-					}
-
-			}else{
-				console.appendText("No BabySteps");
+		public void refreshScreen() {
+			    //saveDatas(); 
+			
+			for(String[] des : oldTests){
+				writer.writeJava(des[1], folderManager.getLibaryPath()+"\\"+ getCurrentTab().getTabName()+"\\"+ des[0]);					
 			}
-		}
-		}
+			for(String[] des : oldCodes){
+				writer.writeJava(des[1], folderManager.getLibaryPath()+"\\"+ getCurrentTab().getTabName()+"\\"+ des[0]);					
+			}
+			
+				// schreibe die neue Texte in die Felder
+				String currentTestName = StringFilter.filteredName(getCurrentTab().getTestArea().getText()); 
+				String currentTaskName = StringFilter.filteredName(getCurrentTab().getWriteArea().getText()); 
+				
+				System.out.println(currentTaskName);
+				System.out.println(currentTestName);
+				
+				String currentTestDest = folderManager.getLibaryPath()+"\\"+getCurrentTab().getTabName()+"\\"+ currentTestName+".java"; 
+				String currentTaskDest = folderManager.getLibaryPath()+"\\"+getCurrentTab().getTabName()+"\\"+ currentTaskName+".java"; 
+				
+				System.out.println(currentTestDest);
+				System.out.println(currentTaskDest);
+				
+				reader.setDestination(currentTaskDest);
+				getCurrentTab().getWriteArea().setText(reader.read());
+				System.out.println(reader.read());
+				
+				reader.setDestination(currentTestDest);
+				getCurrentTab().getTestArea().setText(reader.read());
+				System.out.println(reader.read());
+			
+			}
+			
 
-
+		}
+		
+		
+		
 	}
 
-
-}
-
+	
