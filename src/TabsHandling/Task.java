@@ -15,6 +15,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
@@ -31,6 +32,7 @@ public class Task extends CreatableTab{
 	TextArea text = new TextArea();
 	TextArea test = new TextArea(); 
 	TextArea task = new TextArea(); 
+
 	FolderManager manager = new FolderManager(); 
 	Reader reader =	 new Reader(); 
 	Writer writer = new Writer(); 
@@ -38,18 +40,24 @@ public class Task extends CreatableTab{
 	TreeView<String> view = null ; 
 	ArrayList<String> filesInFolder = manager.getFilesInFolder(super.getTabName()); 	
 	PopUpDialog popUp= new PopUpDialog(); 
+
 	boolean xmlExists = false; 
 	boolean oldProjectExists = false; 	
 	boolean isRefactoring = false; 
 	boolean isPhaseGREEN  = false; 
 	boolean isPhaseRED    = true ; 
 	public boolean haveBabySteps = xmlReader.babysteps(); 
-
-	PhasenAnzeige phaseStatus = new PhasenAnzeige(true, false, false); 
-	BackgroundActions backaction = new BackgroundActions();
+	
+	public PhasenAnzeige phaseStatus = new PhasenAnzeige(true, false, false); 
 	public Clock clock = new Clock(isSelected()); 
+	public Diagramm diagramm = new Diagramm("Deine Werte"); 
 
-	//public BabyStep babyStep = new BabyStep(); 
+	int RED = 0; 
+	int GREEN = 0; 
+	int REFACTOR = 0; 	
+	int ERROR = 0; 
+
+
 
 	public Task(String name) {
 		super(name);
@@ -81,7 +89,7 @@ public class Task extends CreatableTab{
 		manager = new FolderManager(); 
 		filesInFolder = manager.getFilesInFolder(super.getTabName()); 	
 		Collections.sort(filesInFolder); // kann gaendert werden, verhindert, dass .txt spontan bevorzugt wird
-		//System.out.println("FIles in Folder"+super.getTabName()+" "+ filesInFolder);
+
 
 		for(String nameOfFile : filesInFolder){
 
@@ -111,7 +119,6 @@ public class Task extends CreatableTab{
 				String destination = manager.getLibaryPath()+"\\"+super.getTabName()+ "\\" + xmlReader.hauptklassen().get(i)[0];
 				file = new File(destination+".java"); 
 				if(!file.exists()){
-				//	System.out.println("CREATED SOURCE: "+destination+".java");
 					writer.writeJava(xmlReader.hauptklassen().get(i)[1], destination); 
 				}
 				else{
@@ -123,7 +130,7 @@ public class Task extends CreatableTab{
 				file = new File(destination+".java"); 
 
 				if(!file.exists()){
-					//System.out.println("CREATED TEST: "+destination+".java");
+
 					writer.writeJava(xmlReader.testklassen().get(i)[1], destination); 
 				}   
 				else{
@@ -151,8 +158,6 @@ public class Task extends CreatableTab{
 		}
 
 
-
-
 		filesInFolder = manager.getFilesInFolder(super.getTabName()); 	
 		task.setEditable(false);
 		test.setEditable(false);
@@ -163,28 +168,34 @@ public class Task extends CreatableTab{
 		super.setTestArea(test);
 		super.setTaskArea(task);
 
-		setRefactoring(false); 
-		setPhaseGREEN(false); 
 		setPhaseRED(true); 
+		setPhaseGREEN(false); 
+		setRefactoring(false); 	
 
-		//aktualisiere(); 
 
 		super.setStatusLabel(phaseStatus);
 
 		babyStepConfic(); 
+		showGraph(); 
 
 		super.addAllComponents(); 
 	}
 
+
 	public void babyStepConfic(){
 		if(this.haveBabySteps == true){
-		//	babyStep.saveDatas(); 
-			clock.setEnde((int)xmlReader.babystepsValue() / 1000); ////////////// veraendern
-			//	clock.setEnde(50);
+			clock.setEnde((int)xmlReader.babystepsValue() / 1000);
 			clock.setSelected(isSelected()); 
 			super.setTimeLabel(clock);
 			bindToClock(); 
-		//	backaction.start();
+			bindToDiagramm();
+		}
+	}
+
+	public void showGraph(){
+		if(/* Hier muss der XML READER Auskunft geben */ true){
+			bindToDiagramm(); 
+			super.setChart(diagramm);		
 		}
 	}
 
@@ -229,26 +240,16 @@ public class Task extends CreatableTab{
 		String saveClass = oldValue.getValue().toString(); 
 		// die alte adresse in die gespeichert werden soll  
 		String savePoint = manager.getLibaryPath()+"\\"+ super.getTabName() + "\\" + saveClass ;
-	//	System.out.println("SAVE: " +savePoint);
-//
+
 		String loadClass = newValue.getValue().toString(); 
 		// die neue adresse von der gelesen werden soll
 		String loadPoint = manager.getLibaryPath()+"\\"+ super.getTabName() + "\\"+ loadClass+".java";     
-	//	System.out.println("LOAD: "+loadPoint);
-
-
-		/*
-		 * Ab hier werden die Daten gespeichert 
-		 */
 
 		// prueffe, ob die saveClass ein SourceCode ist
 
 		for(int i = 0; i < xmlReader.hauptklassen().size(); i++){
 			boolean isSource = xmlReader.hauptklassen().get(i)[0].equals(saveClass); //contains
 			if(isSource == true){	    	
-				//System.out.println(xmlReader.hauptklassen().get(i)[0]);
-			//	System.out.println(saveClass+" is SourceCode: "+isSource);
-			//	System.out.println("SAVED: "+savePoint);
 				if(!text.getText().isEmpty()){// empty pruefen wegen dem ersten schritt, sonst wird falsch gespeichert
 					writer.writeJava(text.getText(),savePoint);	    
 				}
@@ -263,9 +264,6 @@ public class Task extends CreatableTab{
 		for(int i = 0; i < xmlReader.testklassen().size(); i++){
 			boolean isTest = xmlReader.testklassen().get(i)[0].equals(saveClass); // contains
 			if(isTest == true){
-				//System.out.println(xmlReader.testklassen().get(i)[0]);
-				//System.out.println(saveClass+" is SourceCode: "+isTest);
-			//	System.out.println("SAVED: "+savePoint);
 				if(!test.getText().isEmpty()){ // empty pruefen wegen dem ersten schritt, sonst wird falsch gespeichert
 					writer.writeJava(test.getText(),savePoint);	  
 				}
@@ -280,9 +278,6 @@ public class Task extends CreatableTab{
 		for(int i = 0; i < xmlReader.hauptklassen().size(); i++){
 			boolean isSource = xmlReader.hauptklassen().get(i)[0].equals(loadClass); // contains
 			if(isSource == true){	    	
-			//	System.out.println(xmlReader.hauptklassen().get(i)[0]);
-			//	System.out.println(loadClass+" is SourceCode: "+isSource);
-			//	System.out.println("LOAD: "+loadPoint);
 				reader.setDestination(loadPoint);
 				text.setText(reader.read());
 				text.setEditable(true);
@@ -294,9 +289,6 @@ public class Task extends CreatableTab{
 		for(int i = 0; i < xmlReader.testklassen().size(); i++){
 			boolean isSource = xmlReader.testklassen().get(i)[0].equals(loadClass); // contains 
 			if(isSource == true){	    	
-			//	System.out.println(xmlReader.testklassen().get(i)[0]);
-			//	System.out.println(loadClass+" is SourceCode: "+isSource);
-			//	System.out.println("LOAD: "+loadPoint);
 				reader.setDestination(loadPoint);
 				test.setText(reader.read());
 				test.setEditable(true);				
@@ -312,61 +304,43 @@ public class Task extends CreatableTab{
 	public boolean xmlExists(){ return xmlExists; }
 	public ArrayList<String> filesInProject(){ return filesInFolder; }
 
-	public boolean isPhaseRED(){ return isPhaseRED; }
+	public boolean isPhaseRED(){return isPhaseRED;}
 
 	public void setPhaseRED(boolean status){
+		if(status)
+			incRED();  
+
 		phaseStatus.setPhaseRED(status); 
 		isPhaseRED = status; }
 
 	public boolean isPhaseGREEN(){ return isPhaseGREEN; }
 
 	public void setPhaseGREEN(boolean status){
+		if(status)
+			incGREEN();
+
 		phaseStatus.setPhaseGREEN(status);
 		isPhaseGREEN = status; }
 
 	public boolean isRefactoring(){ return isRefactoring; }
 
 	public void setRefactoring(boolean status){ 
+		if(status)
+			incREFACOTOR();
+
 		phaseStatus.setRefactoring(status);
 		isRefactoring = status; }
 
 
-	public void aktualisiere(){
-
-		Label timeLabel = new Label(); 
-
-		String color = ""; 
-
-		if(isPhaseRED()){
-			timeLabel.setStyle("-fx-border-color:black; -fx-background-color: red;"); 
-		//	System.out.println("RED");
-		}
-		else if(isPhaseGREEN()){
-			timeLabel.setStyle("-fx-border-color:black; -fx-background-color: green;"); 
-		//	System.out.println("GREEN");
-		}
-		else if(isRefactoring()){
-			timeLabel.setStyle("-fx-border-color:black; -fx-background-color: blue"); 
-		//	System.out.println("BLUE"); 
-		}
-
-		//timeLabel.setStyle(color);
-
-		timeLabel.prefWidthProperty().bind(super.Vbox.widthProperty());
-
-
-		super.setTimeLabel(timeLabel);
-	}
-
 	public ArrayList<String> testsInProject(){
 		ArrayList<String> testClasses = new ArrayList<>(); 
-		//System.out.println("READ TESTS IN PROJECT");
+
 		for(String currentFile : filesInFolder){
 			if(currentFile.endsWith(".java")){
 				String className = currentFile.substring(currentFile.lastIndexOf("\\")+1 ,currentFile.lastIndexOf(".")); 
 				for(int i = 0; i < xmlReader.testklassen().size(); i++)
 					if(xmlReader.testklassen().get(i)[0].contains(className) && !testClasses.contains(currentFile)){
-						//System.out.println("THIS IS A TEST: "+className);
+
 						testClasses.add(currentFile); 
 					}			
 			}
@@ -376,13 +350,12 @@ public class Task extends CreatableTab{
 
 	public ArrayList<String> sourcesInProject(){
 		ArrayList<String> sourcesClasses = new ArrayList<>(); 
-	//	System.out.println("READ SOURCES IN PROJECT");
+
 		for(String currentFile : filesInFolder){
 			if(currentFile.endsWith(".java")){
 				String className = currentFile.substring(currentFile.lastIndexOf("\\")+1 ,currentFile.lastIndexOf(".")); 
 				for(int i = 0; i < xmlReader.hauptklassen().size(); i++)
 					if(xmlReader.hauptklassen().get(i)[0].contains(className) && !sourcesClasses.contains(currentFile)){
-					//	System.out.println("THIS IS A SOURCE: "+className);
 						sourcesClasses.add(currentFile); 
 					}			
 			}
@@ -390,59 +363,47 @@ public class Task extends CreatableTab{
 		return sourcesClasses; 
 	}
 
-
-	class BackgroundActions extends Thread{		
-		
-		@Override
-		public void run(){
-			while(true){
-				clock.setSelected(isSelected());
-			}
-		}
-
-		BackgroundActions(){
-			super.run();
-		}
-
-	}
-
-
+	
+	
 	public void bindToClock(){
-		 Timeline timeline = new Timeline(
-				  new KeyFrame(Duration.seconds(0),
-						  new EventHandler<ActionEvent>() {
-					  @Override
-					  public void handle(ActionEvent actionEvent) { 
-						  clock.setSelected(isSelected());
-					  }
-				  }
-						  ),
-				  new KeyFrame(Duration.seconds(1))
-				  );
-		  timeline.setCycleCount(Animation.INDEFINITE);
-		  timeline.play();
+		Timeline timeline = new Timeline(
+				new KeyFrame(Duration.seconds(0),
+						new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) { 
+						clock.setSelected(isSelected());
+					}
+				}
+						),
+				new KeyFrame(Duration.seconds(1))
+				);
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.play();
 	}
-	
 
+	public void bindToDiagramm(){
+		Timeline timeline = new Timeline(
+				new KeyFrame(Duration.seconds(0),
+						new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) { 
+						diagramm.setREDValue(RED);
+						diagramm.setGREENValue(GREEN);
+						diagramm.setREFACTORValue(REFACTOR);
+						diagramm.setERRORValue(ERROR);
+					}
+				}
+						),
+				new KeyFrame(Duration.seconds(1))
+				);
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.play();
+	}
+	public void incRED(){ RED= RED+1;}
+	public void incGREEN(){ GREEN = GREEN +1;}
+	public void incREFACOTOR(){ REFACTOR = REFACTOR + 1; }
+	public void incERROR(){ ERROR = ERROR+1; }
 
+	public Diagramm getDiagramm(){ return diagramm;}
 }
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
 

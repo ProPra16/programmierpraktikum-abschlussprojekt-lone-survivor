@@ -32,16 +32,19 @@ class PhasenAnzeige extends Label {
         	  
         	if(red) { 
         	setStyle("-fx-border-color:black; -fx-background-color: red");
-        	setText("PHASE: RED                                                         "); 
+        	setText("PHASE: RED                                                             "
+        			+ "                                                                     "); 
         	}
         	else if(green){
         	setStyle("-fx-border-color:black; -fx-background-color: green");
-        	setText("PHASE: GREEN                                                        "); 
+        	setText("PHASE: GREEN                                                           "
+        			+ "                                                                     "); 
         	}
         	else if(refactor){
-        	setStyle("-fx-border-color:black; -fx-background-color: blue");
-        	setText("PHASE: REFACTORING                                                  "); 
-          }
+        	setStyle("-fx-border-color:black; -fx-background-color: blue");             
+        	setText("PHASE: REFACTORING                                                     "
+        			+ "                                                                     "); 
+          }  
         	
           }
         }

@@ -3,6 +3,10 @@ package TabsHandling;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.Chart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -32,9 +36,8 @@ public class CreatableTab extends Tab{
 	TextArea taskArea  = null; 
 	TreeView contents  = null; 
 	Label    status    = null; 
-	Label    time      = null; 
-	
-	Label    consoleMsg  = new Label(""); 
+	Label    time      = null; 	
+	Chart    chart     = null; 
 	
 	public CreatableTab(String name){
 		super.setText(name);
@@ -76,18 +79,22 @@ public class CreatableTab extends Tab{
 			hbox.getChildren().add(testArea);
 		if(taskArea != null&& !hbox.getChildren().contains(taskArea))
 			hbox.getChildren().add(taskArea);
-		if(consoleMsg != null&& !hbox.getChildren().contains(consoleMsg))
-			hbox.getChildren().add(consoleMsg);
 		if(contents != null){		
 			Vbox.getChildren().addAll(contents); 
 			
 		}
+		
 		if(time != null){
 			Vbox.getChildren().add(time); 
 			
 		}
+		
 		if(status != null){
 			Vbox.getChildren().add(status); 
+		}
+		
+		if(chart != null){		
+	    Vbox.getChildren().add(chart);
 		}
 		
 		hbox.getChildren().addAll(Vbox); 
@@ -112,16 +119,6 @@ public class CreatableTab extends Tab{
 	public void setTabName(String newName){ tabName = newName; }
     public void setHBox(HBox newHBox)     { hbox = newHBox;    }
     public void setComponents(ArrayList<Object> newComp){ components = newComp; }
-    public void setConsoleMsg(Label newLabel){
-    	    
-    	  
-    		removeObject(consoleMsg);
-    		consoleMsg = new Label(newLabel.getText()); 
-    		//System.out.println("New Label");
-    		aktComponents();
-    		
-    	
-    }
     
     public void setContentTree(TreeView newView){ contents = newView;}
     public void setStatusLabel(Label label)     { status = label ; }
@@ -131,6 +128,7 @@ public class CreatableTab extends Tab{
 	public void setTestArea(TextArea newArea){ testArea = newArea; }
 	public void setTaskArea(TextArea newArea){ taskArea = newArea; }
 	
+	public void setChart(Chart newChart){ chart = newChart;}
     
     	
 	/* Hier befinden sich alle Getter- Methoden */ 
@@ -141,7 +139,7 @@ public class CreatableTab extends Tab{
 	public TextArea getWriteArea(){ return writeArea; }
 	public TextArea getTestArea(){ return testArea; }
 	public TextArea getTaskArea(){return taskArea; }
-	public Label getConsoleMsg(){ return consoleMsg; }
 	public TreeView getTreeView(){ return contents; }
+	public Chart getChart(){ return chart; }
 
 }

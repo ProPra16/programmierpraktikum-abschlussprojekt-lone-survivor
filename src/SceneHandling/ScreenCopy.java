@@ -364,7 +364,6 @@ public class ScreenCopy extends Scene{
 				getCurrentTab().setPhaseRED(false);
 				getCurrentTab().setPhaseGREEN(true);
 				getCurrentTab().setRefactoring(false);
-				getCurrentTab().aktualisiere(); 
 				console.appendText(getCurrentTab().getTabName()+" "+getCurrentTab().isPhaseRED());
 				this.aktButtons(compileREDFile, compileGREENFile, refactorFile);
 			}
