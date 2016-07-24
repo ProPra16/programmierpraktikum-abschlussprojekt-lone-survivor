@@ -200,11 +200,17 @@ public class Screen extends Scene{
 
 		MenuItem compile = new MenuItem("Compile"); 
 		MenuItem leave = new MenuItem("Leave Refactoring"); 
+		MenuItem back = new MenuItem("step back to red"); 
+
 
 		menu.setOnAction((event)-> doCompileSteps(event, compile, leave));
+        back.setOnAction((event)-> {
+        getCurrentTab().setPhaseRED(true);
+        getCurrentTab().setPhaseGREEN(false);;       
+        getCurrentTab().setRefactoring(false);
+         });
 
-
-		menu.getItems().addAll(compile, leave); 
+		menu.getItems().addAll(compile, leave,back); 
 		return menu; 
 	}
 

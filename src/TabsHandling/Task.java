@@ -281,6 +281,10 @@ public class Task extends CreatableTab{
 				reader.setDestination(loadPoint);
 				text.setText(reader.read());
 				text.setEditable(true);
+				if(isPhaseRED){
+					text.setEditable(false);
+					}	
+				else text.setEditable(true);
 
 			}
 		}
@@ -291,7 +295,10 @@ public class Task extends CreatableTab{
 			if(isSource == true){	    	
 				reader.setDestination(loadPoint);
 				test.setText(reader.read());
-				test.setEditable(true);				
+				if(isPhaseGREEN){
+					test.setEditable(false);
+					}	
+				else test.setEditable(true);
 			}
 		}
 
