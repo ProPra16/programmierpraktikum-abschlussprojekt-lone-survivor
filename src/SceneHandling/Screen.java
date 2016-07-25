@@ -28,6 +28,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -39,11 +40,18 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /***************************************************************************************
@@ -159,7 +167,7 @@ public class Screen extends Scene{
 		 * eingefuegt werden.
 		 */
 
-		menuBar.getMenus().addAll(fileMenu(), runMenu());  
+		menuBar.getMenus().addAll(fileMenu(), runMenu(),help());  
 
 
 		/* Lege die MenuAnzeige in der borderPane an
@@ -214,6 +222,52 @@ public class Screen extends Scene{
 		return menu; 
 	}
 
+	public  Menu help(){
+		Menu menu = new Menu("help"); 
+
+		/* fuege die komponenten hinzu */ 
+
+
+		MenuItem compile = new MenuItem("help"); 
+      //erstelle Fenster mit image 
+
+
+
+	  menu.setOnAction((event)-> {
+		  Stage dialog = new Stage();
+		  dialog.initStyle(StageStyle.UTILITY);
+		  
+
+		     
+          ScrollBar s1 = new ScrollBar();
+          
+          s1.setOrientation(Orientation.VERTICAL);
+          
+          s1.valueProperty().addListener((ObservableValue<? extends Number> ov, 
+                  Number old_val, Number new_val) -> {
+                      System.out.println(-new_val.doubleValue());
+              });        
+		  Image m = new Image("bilder/seite1.jpg");
+
+		  Label he = new Label("",new ImageView(m));
+		  
+		     ScrollPane root = new ScrollPane();
+		     Scene scene = new Scene(root, 300, 250);
+		        root.setFitToWidth(true);
+		        root.setContent(he);
+    	dialog.setScene(scene);
+		dialog.show(); 
+	    }
+		);
+
+		
+
+
+
+
+		menu.getItems().addAll(compile); 
+		return menu; 
+	}
 
 	/* 
 	 * Legt die Eigenschaften, Inhalte etc. der HBox an. 
