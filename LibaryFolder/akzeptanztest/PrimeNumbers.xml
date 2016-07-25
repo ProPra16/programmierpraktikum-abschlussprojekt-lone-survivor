@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+  <class>
+    <name>PrimeNumbers</name>
+    <syntax>
+    public class PrimeNumbers{}
+    </syntax>
+  </class>
+  <testclass>
+    <name>Testpri</name>
+    <syntax>
+    import org.junit.Test;
+    import static org.junit.Assert.*;
+    public class Testpri{}
+    </syntax>
+  </testclass>
+  <discription>
+  Schreiben Sie eine Methode primesUntil(int n), die alle Primzahlen kleiner n ausgibt.
+  </discription>
+  <akzeptanztest>
+<activate>true</activate>
+</akzeptanztest>
+</task>

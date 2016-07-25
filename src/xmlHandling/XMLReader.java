@@ -173,7 +173,32 @@ public class XMLReader {
   			return null;
   		}
 	}
-  	
+  	public ArrayList<String[]> akzeptans()
+  	{
+  		try
+  		{
+  			ArrayList <String[]> tmp = new  ArrayList <> ();
+  		
+			NodeList nList = doc.getElementsByTagName("Akzeptanstest");
+			for (int temp = 0; temp < nList.getLength(); temp++) 
+			{
+				nNode = nList.item(temp);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+				{
+					String [] help = new String [2];
+					 eElement = (Element) nNode;	
+					help[0] = eElement.getElementsByTagName("name").item(0).getTextContent();
+					help[1] = eElement.getElementsByTagName("syntax").item(0).getTextContent();
+					tmp.add(help);
+				}
+			}
+			return tmp;
+	}
+  		catch(Exception o)
+  		{
+  			return null;
+  		}
+  	}
   	
 
   	/*
@@ -199,7 +224,28 @@ public class XMLReader {
 		  return false;	
 	  }
   }
-
+  //  @autor Denis Stroh 
+  //* Gibt ein boolean zurueck ob fuer diese Aufgabe azeptanztests vorgesehen sind 
+  public boolean akzeptanstest()
+  {
+	  try
+	  {
+		  if(eingelesen == true ) 
+		  {
+			  NodeList nList = doc.getElementsByTagName("akzeptanztest");
+			  nNode = nList.item(0);
+		  		eElement = (Element) nNode;
+		  		System.out.println("bla2");
+		  		if(eElement.getElementsByTagName("activate").item(0).getTextContent().equals("true"))return true;
+		  		else{return false;}
+		  }
+		  return false;	
+	  }
+	  catch(Exception o)
+	  {
+		  return false;	
+	  }
+  }
   	/*
      * Gibt den Wert zurueck der die Babysteps in Millisekunden repraesentiert
      * Prueft vorher ob Babysteps enabeld sind, gibt ansonsten 0 zurueck

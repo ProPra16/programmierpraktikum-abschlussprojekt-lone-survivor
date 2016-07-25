@@ -12,12 +12,14 @@ import javafx.util.Duration;
 
 class PhasenAnzeige extends Label {
 	
-  public boolean red, green, refactor = false; 
+  public boolean red, green, refactor,AkzeptanzRed,AkzeptanzGreen = false; 
   
-  public PhasenAnzeige(boolean a, boolean b, boolean c) {
+  public PhasenAnzeige(boolean a, boolean b, boolean c,boolean d,boolean e) {
       red = a; 
       green = b; 
       refactor = c; 
+      AkzeptanzRed = d;
+      AkzeptanzGreen = e;
 	  bindToTime();
   }
 
@@ -35,14 +37,24 @@ class PhasenAnzeige extends Label {
         	setText("PHASE: RED                                                             "
         			+ "                                                                     "); 
         	}
-        	else if(green){
+        	 if(green){
         	setStyle("-fx-border-color:black; -fx-background-color: green");
         	setText("PHASE: GREEN                                                           "
         			+ "                                                                     "); 
         	}
-        	else if(refactor){
+        	 if(refactor){
         	setStyle("-fx-border-color:black; -fx-background-color: blue");             
         	setText("PHASE: REFACTORING                                                     "
+        			+ "                                                                     "); 
+          }  
+        	 if(AkzeptanzRed){
+        	setStyle("-fx-border-color:black; -fx-background-color: pink");             
+        	setText("PHASE: Akzeptanztest Schreiben                                                     "
+        			+ "                                                                     "); 
+          }  
+        	 if(AkzeptanzGreen){
+        	setStyle("-fx-border-color:black; -fx-background-color: yellow");             
+        	setText("PHASE: Akzeptanztest                                                     "
         			+ "                                                                     "); 
           }  
         	
@@ -58,6 +70,8 @@ class PhasenAnzeige extends Label {
   public void setPhaseRED(boolean status)   { red = status; }
   public void setPhaseGREEN(boolean status) { green = status; }
   public void setRefactoring(boolean status){ refactor = status; }
+  public void setAPhaseRed(boolean status){   AkzeptanzRed = status; }
+  public void setAPhaseGreen(boolean status){ AkzeptanzGreen = status; }
   
   
 

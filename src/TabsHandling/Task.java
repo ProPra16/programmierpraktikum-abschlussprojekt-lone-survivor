@@ -22,6 +22,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.util.Duration;
 import xmlHandling.XMLReader;
+
+
 /***************************************************************************************
  *                                                                                     *
  * @author Marc Feger                                                                  *
@@ -45,13 +47,18 @@ public class Task extends CreatableTab{
 	boolean oldProjectExists = false; 	
 	boolean isRefactoring = false; 
 	boolean isPhaseGREEN  = false; 
-	boolean isPhaseRED    = true ; 
+	boolean isPhaseRED    = false ; 
+	boolean isAkzPhaseRED = false; 
+	boolean isAkzPhaseGREEN =false;
+
 	public boolean haveBabySteps = xmlReader.babysteps(); 
+	public boolean haveAkzeptanstest = xmlReader.akzeptanstest();
 	
-	public PhasenAnzeige phaseStatus = new PhasenAnzeige(true, false, false); 
+	public PhasenAnzeige phaseStatus = new PhasenAnzeige(isPhaseRED, isPhaseGREEN, isRefactoring,isAkzPhaseRED,isAkzPhaseGREEN); 
 	public Clock clock = new Clock(isSelected()); 
 	public Diagramm diagramm = new Diagramm("Deine Werte"); 
-
+	
+ 
 	int RED = 0; 
 	int GREEN = 0; 
 	int REFACTOR = 0; 	
@@ -167,11 +174,19 @@ public class Task extends CreatableTab{
 		super.setWriteArea(text);
 		super.setTestArea(test);
 		super.setTaskArea(task);
-
+		
+        if(!xmlReader.akzeptanstest()){
 		setPhaseRED(true); 
 		setPhaseGREEN(false); 
 		setRefactoring(false); 	
-
+        }
+        else{
+    		setPhaseRED(false); 
+    		setPhaseGREEN(false); 
+    		setRefactoring(false); 
+            setAkzeptansPhaseRED(true);
+            setAkzeptansPhaseGREEN(false);
+    		} 
 
 		super.setStatusLabel(phaseStatus);
 
@@ -295,6 +310,7 @@ public class Task extends CreatableTab{
 			if(isSource == true){	    	
 				reader.setDestination(loadPoint);
 				test.setText(reader.read());
+
 				if(isPhaseGREEN){
 					test.setEditable(false);
 					}	
@@ -310,13 +326,30 @@ public class Task extends CreatableTab{
 
 	public boolean xmlExists(){ return xmlExists; }
 	public ArrayList<String> filesInProject(){ return filesInFolder; }
+    //*
+	 public boolean isPhaseAkzeptansRed(){
+		 return isAkzPhaseRED; 
 
+		 }
+	 public boolean isPhaseAkzeptansGreen(){
+		 return isAkzPhaseGREEN; 
+
+		 }
+		public void setAkzeptansPhaseRED(boolean status){  
+			phaseStatus.setAPhaseRed(status); 
+			isAkzPhaseRED = status; }
+		
+		public void setAkzeptansPhaseGREEN(boolean status){  
+			phaseStatus.setAPhaseGreen(status); 
+			isAkzPhaseGREEN = status; }
+		
+	//
 	public boolean isPhaseRED(){return isPhaseRED;}
-
+    
 	public void setPhaseRED(boolean status){
 		if(status)
 			incRED();  
-
+        
 		phaseStatus.setPhaseRED(status); 
 		isPhaseRED = status; }
 
@@ -334,7 +367,7 @@ public class Task extends CreatableTab{
 	public void setRefactoring(boolean status){ 
 		if(status)
 			incREFACOTOR();
-
+           
 		phaseStatus.setRefactoring(status);
 		isRefactoring = status; }
 

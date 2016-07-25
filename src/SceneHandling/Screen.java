@@ -89,6 +89,7 @@ public class Screen extends Scene{
 
 	//BabyStep babyStep = new BabyStep();
 	BabyStep babyStep = new BabyStep(); 
+	boolean adtt=false;
     
 	boolean first =true;
 	public Screen(double width, double height) {
@@ -351,27 +352,46 @@ public class Screen extends Scene{
 		}
 
 	}
+    public void doCompileSteps(Event event,MenuItem compile,MenuItem leave){
+    	 if(first == false ){
+ 		   getCurrentTab().getDiagramm().aktualisiere(); 
+           
+           if(event.getTarget() == compile){
+              if(getCurrentTab().isPhaseRED())dosteps1( );	
+                 else {
+                	 if(getCurrentTab().isPhaseGREEN())dosteps2();
+                    	  else { 
+                    		  if(getCurrentTab().isRefactoring())dosteps3( event, compile, leave);
+                	                else{ if(getCurrentTab().isPhaseAkzeptansRed()){dosteps4();}
+                	                else{ if(getCurrentTab().isPhaseAkzeptansGreen()){dosteps5();
+                	                  adtt=true;}}
+                              	  }
+                          
+                    	        }
+                     }
+           }
+           else if(event.getTarget() == leave) dosteps3( event, compile, leave);
+    	 
+      
+
+    }  else console.appendText("Pleas select a File");
+    }
+
+
+       
 
 
 
-	public void doCompileSteps(Event event, MenuItem compile, MenuItem leave){
-        if(first == false){
-		getCurrentTab().getDiagramm().aktualisiere(); 
 
-		if(event.getTarget() == compile){
-
-		}			
-		Tester tester = new Tester(); 
-		Reader reader = new Reader(); 
-
+////
+	public void dosteps1(){
 		// Stufe eins: einen Test schreiben der fehl schlaegt 
 
-		if(getCurrentTab().isPhaseRED() && event.getTarget() == compile ){		
-
+	
 			getCurrentTab().clock.setSleeping(false);
-
-			tester = new Tester(); 
-
+          
+			Tester tester = new Tester(); 
+            Reader reader = new Reader();
 			for(String testFiles : getCurrentTab().testsInProject()){
 
 
@@ -379,8 +399,12 @@ public class Screen extends Scene{
 				String testCode = reader.read(); 
 				String testName = StringFilter.filteredName(testCode); 
 
+                if(adtt){
+                	if(!testName.equals("acceptancetest")){
+        				tester.classehinzufuegen(testName, testCode, true);
 
-				tester.classehinzufuegen(testName, testCode, true);
+                	}
+                }else  tester.classehinzufuegen(testName, testCode, true);
 			}
 
 
@@ -413,12 +437,60 @@ public class Screen extends Scene{
 				console.appendText("Please write any Test that fails or watch other Tests\n");
 
 			}
+		   }
+  
+	public void dosteps2(){
+
+		Tester tester = new Tester(); 
+        Reader reader = new Reader();
+		for(String testFiles : getCurrentTab().testsInProject()){
+
+
+			reader.setDestination(testFiles);
+			String testCode = reader.read(); 
+			String testName = StringFilter.filteredName(testCode); 
+
+
+            if(adtt){
+            	if(!testName.equals("acceptancetest")){
+    				tester.classehinzufuegen(testName, testCode, true);
+
+            	}
+            }else  tester.classehinzufuegen(testName, testCode, true);
+
 		}
 
-		if(getCurrentTab().isPhaseGREEN() && event.getTarget() == compile ){
+		for(String sourceFiles : getCurrentTab().sourcesInProject()){
 
 
-			tester = new Tester(); 
+
+			reader.setDestination(sourceFiles);
+			String methodCode = reader.read(); 
+			String methodName = StringFilter.filteredName(methodCode); 
+
+
+			tester.classehinzufuegen(methodName, methodCode, false);
+		}
+
+		if(tester.Fehlererkennung() == false ){
+			console.appendText("Refactor the code \n");
+			// fuehre durch die steps 
+			getCurrentTab().setPhaseRED(false);
+			getCurrentTab().setPhaseGREEN(false);
+			getCurrentTab().setRefactoring(true);
+
+		}
+		else {
+			console.appendText("The Test is not solved \n");
+			console.appendText( tester.getErrorMessage()+"\n");
+			getCurrentTab().incERROR(); 				
+		}
+	}
+	
+	public void dosteps3(Event event,MenuItem compile,MenuItem leave){
+
+		Tester tester = new Tester(); 
+		Reader reader = new Reader(); 
 
 			for(String testFiles : getCurrentTab().testsInProject()){
 
@@ -428,55 +500,14 @@ public class Screen extends Scene{
 				String testName = StringFilter.filteredName(testCode); 
 
 
-				tester.classehinzufuegen(testName, testCode, true);
+                if(adtt){
+                	if(!testName.equals("acceptancetest")){
+        				tester.classehinzufuegen(testName, testCode, true);
+
+                	}
+                }else  tester.classehinzufuegen(testName, testCode, true);
 
 			}
-
-			for(String sourceFiles : getCurrentTab().sourcesInProject()){
-
-
-
-				reader.setDestination(sourceFiles);
-				String methodCode = reader.read(); 
-				String methodName = StringFilter.filteredName(methodCode); 
-
-
-				tester.classehinzufuegen(methodName, methodCode, false);
-			}
-
-			if(tester.Fehlererkennung() == false ){
-				console.appendText("Refactor the code \n");
-				// fuehre durch die steps 
-				getCurrentTab().setPhaseRED(false);
-				getCurrentTab().setPhaseGREEN(false);
-				getCurrentTab().setRefactoring(true);
-				getCurrentTab().clock.setSleeping(true);
-
-			}
-			else {
-				console.appendText("The Test is not solved \n");
-				console.appendText( tester.getErrorMessage()+"\n");
-				getCurrentTab().incERROR(); 				
-			}
-		}
-
-		if(getCurrentTab().isRefactoring() && event.getTarget() == leave){
-
-			tester = new Tester(); 
-
-			for(String testFiles : getCurrentTab().testsInProject()){
-
-
-				reader.setDestination(testFiles);
-				String testCode = reader.read(); 
-				String testName = StringFilter.filteredName(testCode); 
-
-
-				tester.classehinzufuegen(testName, testCode, true);
-
-			}
-
-
 			for(String sourceFiles : getCurrentTab().sourcesInProject()){
 
 
@@ -492,10 +523,20 @@ public class Screen extends Scene{
 			if(tester.Fehlererkennung() == false ){
 				console.appendText("Please write a Test that fails \n");
 				// fuehre durch die steps
-				getCurrentTab().setPhaseRED(true);
-				getCurrentTab().setPhaseGREEN(false);
-				getCurrentTab().setRefactoring(false);		
+				if(event.getTarget() == leave){
+				    if(adtt){
+						getCurrentTab().setPhaseRED(false); 
+						getCurrentTab().setPhaseGREEN(false); 
+						getCurrentTab().setRefactoring(false); 
+						getCurrentTab().setAkzeptansPhaseRED(true);
+						getCurrentTab().setAkzeptansPhaseGREEN(false);
+				    }else{
+						getCurrentTab().setPhaseRED(true);
+						getCurrentTab().setPhaseGREEN(false);
+						getCurrentTab().setRefactoring(false);		
+				    }
 
+				}
 				getCurrentTab().clock.setSleeping(false);
 				getCurrentTab().clock.setTime(0);
 				babyStep.saveDatas();
@@ -506,14 +547,105 @@ public class Screen extends Scene{
 				console.appendText( tester.getErrorMessage()+"\n");
 				getCurrentTab().incERROR(); 
 			}
-		}			
-       }
-        else console.appendText("Pleas select a File");
+		}	
+	public void dosteps4(){
+		// Stufe eins: einen Test schreiben der fehl schlaegt 
+          
+			Tester tester = new Tester(); 
+            Reader reader = new Reader();
+			for(String testFiles : getCurrentTab().testsInProject()){
 
 
-	}	
+				reader.setDestination(testFiles);
+				String testCode = reader.read(); 
+				String testName = StringFilter.filteredName(testCode); 
+
+                if(testName.equals("acceptancetest")){
+				tester.classehinzufuegen(testName, testCode, true);
+                }
+			}
 
 
+			for(String sourceFiles : getCurrentTab().sourcesInProject()){
+
+
+
+				reader.setDestination(sourceFiles);
+				String methodCode = reader.read(); 
+				String methodName = StringFilter.filteredName(methodCode); 
+
+
+				tester.classehinzufuegen(methodName, methodCode, false);
+			}
+
+
+			if(tester.Fehlererkennung() == true ){
+				String compileerror = tester.getErrorMessage(); 
+				console.appendText(compileerror+"\n");
+				console.appendText("Please add a Method that solves the Test"+"\n");
+				// fuehre durch die steps 
+				getCurrentTab().setPhaseRED(false); 
+				getCurrentTab().setPhaseGREEN(false); 
+				getCurrentTab().setRefactoring(false); 
+				getCurrentTab().setAkzeptansPhaseRED(false);
+				getCurrentTab().setAkzeptansPhaseGREEN(true);
+				
+
+				console.appendText(getCurrentTab().getTabName()+" "+getCurrentTab().isPhaseRED());
+
+			}
+			else {
+				console.appendText("Please write any Test that fails or watch other Tests\n");
+
+			}
+		   }
+	public void dosteps5(){
+
+        
+			Tester tester = new Tester(); 
+           Reader reader = new Reader();
+			for(String testFiles : getCurrentTab().testsInProject()){
+
+
+				reader.setDestination(testFiles);
+				String testCode = reader.read(); 
+				String testName = StringFilter.filteredName(testCode); 
+
+               if(testName.equals("acceptancetest")){
+				tester.classehinzufuegen(testName, testCode, true);
+               }
+			}
+
+
+			for(String sourceFiles : getCurrentTab().sourcesInProject()){
+
+
+
+				reader.setDestination(sourceFiles);
+				String methodCode = reader.read(); 
+				String methodName = StringFilter.filteredName(methodCode); 
+
+
+				tester.classehinzufuegen(methodName, methodCode, false);
+			}
+
+		if(tester.Fehlererkennung() == false ){
+			// fuehre durch die steps 
+			
+			getCurrentTab().setPhaseRED(true); 
+			getCurrentTab().setPhaseGREEN(false); 
+			getCurrentTab().setRefactoring(false); 
+			getCurrentTab().setAkzeptansPhaseRED(false);
+			getCurrentTab().setAkzeptansPhaseGREEN(false);
+
+		}
+		else {
+			console.appendText("The Test is not solved \n");
+			console.appendText( tester.getErrorMessage()+"\n");
+			getCurrentTab().incERROR(); 				
+		}
+	}
+	////////////////////
 	public void importFromServer(){		
 		String from = "http://upload.worldofplayers.de/files10/Aufgaben.zip"; 
 		String to   = folderManager.getLibaryPath(); 

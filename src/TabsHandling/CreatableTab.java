@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+
 /***************************************************************************************
  * @author Marc Feger                                                                  *
  ***************************************************************************************/
@@ -73,10 +74,12 @@ public class CreatableTab extends Tab{
 	
 	public void addAllComponents(){
 		
-		if(writeArea != null && !hbox.getChildren().contains(writeArea))
+		if(writeArea != null && !hbox.getChildren().add(writeArea))
 			hbox.getChildren().add(writeArea);
-		if(testArea != null&& !hbox.getChildren().contains(testArea))
+		if(testArea != null&& !hbox.getChildren().add(testArea)){
+
 			hbox.getChildren().add(testArea);
+		}
 		if(taskArea != null&& !hbox.getChildren().contains(taskArea))
 			hbox.getChildren().add(taskArea);
 		if(contents != null){		
