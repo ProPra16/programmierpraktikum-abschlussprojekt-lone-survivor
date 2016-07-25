@@ -336,14 +336,15 @@ public class Screen extends Scene{
 
 				if(!tabs.containsKey(selected)){
 					tabs.put(selected,new Task(selected)); 
+					tabPane.getTabs().add(tabs.get(selected))	; 
+					babyStep.saveDatas();
 				}
 				else{
 					tabPane.getTabs().remove(tabs.get(selected)); 		    	
 				}
 			}
 
-			tabPane.getTabs().add(tabs.get(selected))	; 
-			babyStep.saveDatas();     ////////////////////////////////////////////
+		     ////////////////////////////////////////////
 
 		}
 
