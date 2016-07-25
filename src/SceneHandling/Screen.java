@@ -89,7 +89,8 @@ public class Screen extends Scene{
 
 	//BabyStep babyStep = new BabyStep();
 	BabyStep babyStep = new BabyStep(); 
-
+    
+	boolean first =true;
 	public Screen(double width, double height) {
 		super(root, width, height);
 
@@ -338,6 +339,7 @@ public class Screen extends Scene{
 					tabs.put(selected,new Task(selected)); 
 					tabPane.getTabs().add(tabs.get(selected))	; 
 					babyStep.saveDatas();
+					first = false;
 				}
 				else{
 					tabPane.getTabs().remove(tabs.get(selected)); 		    	
@@ -353,7 +355,7 @@ public class Screen extends Scene{
 
 
 	public void doCompileSteps(Event event, MenuItem compile, MenuItem leave){
-
+        if(first == false){
 		getCurrentTab().getDiagramm().aktualisiere(); 
 
 		if(event.getTarget() == compile){
@@ -505,7 +507,8 @@ public class Screen extends Scene{
 				getCurrentTab().incERROR(); 
 			}
 		}			
-
+       }
+        else console.appendText("Pleas select a File");
 
 
 	}	
